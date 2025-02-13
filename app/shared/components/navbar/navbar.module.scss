@@ -1,0 +1,86 @@
+.toplevel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #e1533d;
+  padding: 10px;
+}
+
+.logoImg {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  width: 100px;
+  margin-left: 10px;
+  margin-right: 8px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.navleft {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+.navLink {
+  all: unset;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  text-wrap: nowrap;
+  gap: 8px;
+  cursor: pointer;
+
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+.loginLink {
+  color: white;
+  text-decoration: none;
+  border: 2px solid white;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 20px;
+  transition: background-color 0.3s, color 0.3s;
+  &:hover {
+    background-color: white;
+    color: #e1523d;
+  }
+}
+
+.navright {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  color: white;
+  margin-right: 2%;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.logoutButton {
+  background-color: transparent;
+  border: 2px solid white;
+  padding: 8px 16px;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background-color 0.3s, color 0.3s;
+  border-radius: 20px;
+
+  &:hover {
+    background-color: white;
+    color: #e1523d;
+  }
+}

@@ -1,0 +1,90 @@
+.topLevel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    background-color: #d9d9d9;
+    padding: 1.5rem;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 350px;
+    width: 100%;
+}
+
+.title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    margin-bottom: 0.75rem;
+}
+
+.label {
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+}
+
+.input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 0.9rem;
+}
+
+.buttonSubmmit {
+    padding: 0.5rem;
+    border: none;
+    border-radius: 20px;
+    background-color: #005e54;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+
+    &:hover {
+        background-color: #004d45;
+    }
+}
+
+.error,
+.success {
+    margin-top: 0.75rem;
+}
+
+.inputGroup {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register {
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.regiterLink {
+    text-decoration: none;
+    color: #005e54;
+}
+
+@media screen and (max-width: 1366px) {
+    .topLevel {
+        height: auto;
+    }
+}
