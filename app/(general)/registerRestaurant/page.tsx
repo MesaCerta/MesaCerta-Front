@@ -74,7 +74,7 @@ export default function Register() {
           <CustomInput
             id="cnpj"
             name="cnpj"
-            placeholder=""
+            placeholder="00.000.000/0000-00"
             label="CNPJ"
             value={formData.cnpj}
             onChange={handleChange}
