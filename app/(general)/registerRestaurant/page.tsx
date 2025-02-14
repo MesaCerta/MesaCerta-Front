@@ -10,6 +10,7 @@ import CustomInput from "@/app/shared/components/inputs/customInput/index";
 import useHandleChangeRestaurant from "@/app/shared/hooks/HandleChangeRestaurant/useHandleChangeRestaurant";
 import { cnpjMask } from "@/app/shared/utils/masks/cnpj";
 import ScheduleInput from "@/app/shared/components/inputs/scheduleInput";
+import Image from "next/image";
 
 export default function Register() {
   const router = useRouter();
@@ -18,11 +19,8 @@ export default function Register() {
   const [success, setSuccess] = useState("");
   const { user } = useAuthContext();
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       const restaurantData = await createRestaurant({
         name: formData.name,
@@ -32,7 +30,6 @@ export default function Register() {
         schedule: formData.schedule,
         ownerId: user!.id,
       });
-      console.log(restaurantData);
       alert("Registro realizado com sucesso!");
       router.push("/home");
     } catch (err) {
@@ -49,9 +46,9 @@ export default function Register() {
   };
 
   return (
-    <div className={styles.topLevel}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Registro</h1>
+    <div className={styles.pageContainer}>
+      <div className={styles.leftSide}>
+        <h1 className={styles.title}>Registro de Restaurante</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <CustomInput
             id="name"
@@ -62,6 +59,7 @@ export default function Register() {
             value={formData.name}
             onChange={handleChange}
           />
+
           <CustomInput
             id="address"
             name="address"
@@ -71,6 +69,7 @@ export default function Register() {
             value={formData.address}
             onChange={handleChange}
           />
+
           <CustomInput
             id="cnpj"
             name="cnpj"
@@ -81,6 +80,7 @@ export default function Register() {
             type="cpf"
             mask={cnpjMask}
           />
+
           <CustomInput
             id="phone"
             name="phone"
@@ -92,6 +92,7 @@ export default function Register() {
             mask={phoneMask}
           />
           <ScheduleInput onChange={handleScheduleChange} />
+
           <button type="submit" className={styles.buttonSubmmit}>
             Registrar
           </button>
@@ -108,6 +109,16 @@ export default function Register() {
             </span>
           </div>
         </form>
+      </div>
+
+      <div className={styles.imageSection}>
+        <Image
+          src="/hallpaper_login.png"
+          alt="Imagem de restaurante"
+          fill
+          style={{ objectFit: "cover" }}
+          priority
+        />
       </div>
     </div>
   );

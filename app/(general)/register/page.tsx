@@ -9,6 +9,7 @@ import { createUser, loginUser } from "@/app/shared/service";
 import { phoneMask } from "@/app/shared/utils/Masks/masks";
 import CustomInput from "@/app/shared/components/inputs/customInput/index";
 import CustomSelect from "@/app/shared/components/inputs/customSelect";
+import Image from "next/image";
 
 export default function Register() {
   const router = useRouter();
@@ -24,9 +25,7 @@ export default function Register() {
     }
   }, [user, router]);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (formData.password !== confirmPassword) {
@@ -55,9 +54,9 @@ export default function Register() {
   };
 
   return (
-    <div className={styles.topLevel}>
-      <div className={styles.container}>
-        <h1 className={styles.title}>Registro</h1>
+    <div className={styles.pageContainer}>
+      <div className={styles.leftSide}>
+        <h1 className={styles.title}>Cadastro Usuário</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <CustomInput
             id="name"
@@ -68,27 +67,37 @@ export default function Register() {
             value={formData.name}
             onChange={handleChange}
           />
+
+          <CustomInput
+            id="birthdate"
+            name="birthdate"
+            placeholder=""
+            label="Data de Nascimento"
+            value={formData.birthdate ?? ""}
+            onChange={handleChange}
+            type="date"
+          />
+
+          <CustomInput
+            id="cpf"
+            name="cpf"
+            placeholder="000.000.000-00"
+            label="CPF"
+            value={formData.cpf}
+            onChange={handleChange}
+            type="cpf"
+          />
+
           <CustomInput
             id="email"
             name="email"
-            placeholder="Email"
+            placeholder="Seu email"
             label="Email"
             value={formData.email}
             onChange={handleChange}
             type="email"
           />
-          <CustomSelect
-            id="sex"
-            name="sex"
-            label="Sexo"
-            value={formData.sex!}
-            onChange={handleChange}
-            options={[
-              { value: "Male", label: "Masculino" },
-              { value: "Female", label: "Feminino" },
-              { value: "Other", label: "Outro" },
-            ]}
-          />
+
           <CustomInput
             id="address"
             name="address"
@@ -108,15 +117,6 @@ export default function Register() {
             type="phone"
             mask={phoneMask}
           />
-          <CustomInput
-            id="birthdate"
-            name="birthdate"
-            placeholder=""
-            label="Data de Nascimento"
-            value={formData.birthdate ?? ""}
-            onChange={handleChange}
-            type="date"
-          />
 
           <CustomInput
             id="password"
@@ -127,26 +127,44 @@ export default function Register() {
             value={formData.password}
             onChange={handleChange}
           />
+
           <CustomInput
             id="confirmPassword"
             name="confirmPassword"
             type="password"
-            placeholder="Confirmar Senha"
-            label="Confirmar Senha"
+            placeholder="Repita sua senha"
+            label="Repita sua senha"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          <CustomInput
-            id="cpf"
-            name="cpf"
-            placeholder="000.000.000-00"
-            label="CPF"
-            value={formData.cpf}
+
+          <CustomSelect
+            id="sex"
+            name="sex"
+            label="Sexo"
+            value={formData.sex!}
             onChange={handleChange}
-            type="cpf"
+            options={[
+              { value: "Male", label: "Masculino" },
+              { value: "Female", label: "Feminino" },
+              { value: "Other", label: "Outro" },
+            ]}
           />
-          <button type="submit" className={styles.buttonSubmmit}>
-            Registrar
+
+          <div className={styles.checkboxContainer}>
+            <input
+              id="termos"
+              type="checkbox"
+              required
+              className={styles.checkbox}
+            />
+            <label htmlFor="termos" className={styles.checkboxLabel}>
+              Estou de acordo com <span>Termos e Condições</span>
+            </label>
+          </div>
+
+          <button type="submit" className={styles.buttonSubmit}>
+            Criar
           </button>
 
           {error && <p className={styles.error}>{error}</p>}
@@ -155,12 +173,22 @@ export default function Register() {
           <div className={styles.register}>
             <span>
               Já tem uma conta?{" "}
-              <Link href="/login" className={styles.regiterLink}>
+              <Link href="/login" className={styles.registerLink}>
                 Faça login
               </Link>
             </span>
           </div>
         </form>
+      </div>
+
+      <div className={styles.imageSection}>
+        <Image
+          src="/hallpaper_login.png"
+          alt="Imagem de restaurante"
+          fill
+          style={{ objectFit: "cover" }}
+          priority
+        />
       </div>
     </div>
   );

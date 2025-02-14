@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from "react";
-import styles from "@/app/(general)/register/register.module.scss";
+import styles from "./customInput.module.scss";
 import { ICustomInputProps } from "@/app/shared/@types";
 
 const applyMask = (value: string, mask?: (value: string) => string): string => {

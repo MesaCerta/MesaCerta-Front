@@ -1,5 +1,5 @@
-import React, { useState, ChangeEvent } from "react";
-import styles from "@/app/(general)/register/register.module.scss";
+import React, { useState } from "react";
+import styles from "./scheduleInput.module.scss";
 
 const weekDays = [
   "segunda-feira",
@@ -27,10 +27,7 @@ const ScheduleInput: React.FC<Props> = ({ onChange }) => {
   const handleCheckboxChange = (day: string, checked: boolean) => {
     if (checked) {
       setSchedule((prev) => {
-        const newSchedule = [
-          ...prev,
-          { day, openingTime: "", closingTime: "" },
-        ];
+        const newSchedule = [...prev, { day, openingTime: "", closingTime: "" }];
         onChange(newSchedule);
         return newSchedule;
       });
@@ -49,36 +46,38 @@ const ScheduleInput: React.FC<Props> = ({ onChange }) => {
     value: string
   ) => {
     setSchedule((prev) => {
-      const updatedSchedule = prev.map((entry) =>
+      const updated = prev.map((entry) =>
         entry.day === day ? { ...entry, [field]: value } : entry
       );
-      onChange(updatedSchedule);
-      return updatedSchedule;
+      onChange(updated);
+      return updated;
     });
   };
 
   return (
-    <div className={styles.field}>
-      <label className={styles.label}>Horários de Funcionamento:</label>
+    <div className={styles.scheduleContainer}>
+      <label className={styles.scheduleLabel}>Horários de Funcionamento:</label>
       {weekDays.map((day) => {
         const isChecked = schedule.some((entry) => entry.day === day);
         const scheduleEntry = schedule.find((entry) => entry.day === day);
 
         return (
-          <div key={day} className={styles.checkboxContainer}>
-            <label>
+          <div key={day} className={styles.weekDayRow}>
+            <div>
               <input
                 type="checkbox"
+                className={styles.checkbox}
                 checked={isChecked}
                 onChange={(e) => handleCheckboxChange(day, e.target.checked)}
               />
-              {day}
-            </label>
+              <span>{day}</span>
+            </div>
 
             {isChecked && (
               <div className={styles.timeInputs}>
                 <input
                   type="time"
+                  className={styles.timeInput}
                   value={scheduleEntry?.openingTime || ""}
                   onChange={(e) =>
                     handleTimeChange(day, "openingTime", e.target.value)
@@ -87,6 +86,7 @@ const ScheduleInput: React.FC<Props> = ({ onChange }) => {
                 />
                 <input
                   type="time"
+                  className={styles.timeInput}
                   value={scheduleEntry?.closingTime || ""}
                   onChange={(e) =>
                     handleTimeChange(day, "closingTime", e.target.value)
