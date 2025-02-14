@@ -136,6 +136,15 @@ export default function Register() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <CustomInput
+            id="cpf"
+            name="cpf"
+            placeholder="000.000.000-00"
+            label="CPF"
+            value={formData.cpf}
+            onChange={handleChange}
+            type="cpf"
+          />
           <button type="submit" className={styles.buttonSubmmit}>
             Registrar
           </button>

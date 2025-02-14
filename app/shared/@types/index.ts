@@ -8,6 +8,7 @@ interface IUserData {
   address: string;
   phone: string;
   birthdate?: string;
+  cpf: string;
 }
 
 interface ICardProps {
@@ -63,16 +64,23 @@ interface ICustomSelectProps {
 }
 
 interface IListData {
-  id: string;
+  id?: string;
   name: string;
   image?: string;
-  createdAt: string;
+  createdAt?: string;
   updatedAt?: string;
 }
 
 interface IRestaurantData extends IListData {
   address: string;
   phone: string;
+  cnpj: string;
+  schedule: IScheduleData[];
+  ownerId: IUserData["id"];
+}
+
+interface IScheduleData {
+  day: string;
   openingTime: string;
   closingTime: string;
 }

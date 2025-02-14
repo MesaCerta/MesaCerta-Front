@@ -31,9 +31,7 @@ const CardList: React.FC<ICardProps> = ({ item, rating, onClick, itemType }) => 
       <div className={styles.info}>
         <h3>{item.name}</h3>
         {isRestaurant(item) && <p>{item.address}</p>}
-        {isRestaurant(item) && (
-          <p>{`Horário: ${item.openingTime} - ${item.closingTime}`}</p>
-        )}
+
         {isRestaurant(item) && <p>{item.phone}</p>}
         {isDish(item) && <p>{`Preço: ${formattedPrice}`}</p>}
         <div className={styles.rating}>
