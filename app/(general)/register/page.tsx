@@ -10,6 +10,7 @@ import { phoneMask } from "@/app/shared/utils/Masks/masks";
 import CustomInput from "@/app/shared/components/inputs/customInput/index";
 import CustomSelect from "@/app/shared/components/inputs/customSelect";
 import Image from "next/image";
+import RestaurantOwnerCheckbox from "@/app/shared/components/RestaurantOwnerCheckbox";
 
 export default function Register() {
   const router = useRouter();
@@ -17,13 +18,14 @@ export default function Register() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isRestaurantOwner, setIsRestaurantOwner] = useState(false); 
   const { user, setUser, setToken } = useAuthContext();
 
-  useEffect(() => {
-    if (user) {
-      router.push("/home");
-    }
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/home");
+  //   }
+  // }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,7 +39,6 @@ export default function Register() {
 
     try {
       await createUser(dataToSend);
-
       const loginData = await loginUser({
         email: formData.email,
         password: formData.password,
@@ -46,7 +47,12 @@ export default function Register() {
       setToken(loginData.token);
 
       alert("Registro realizado com sucesso!");
-      router.push("/home");
+      
+      if (isRestaurantOwner) {
+        router.push("/registerRestaurant");
+      } else {
+        router.push("/home");
+      }
     } catch (err) {
       setError("O registro falhou. Por favor, tente novamente.");
       setSuccess("");
@@ -163,8 +169,13 @@ export default function Register() {
             </label>
           </div>
 
+          <RestaurantOwnerCheckbox
+            isRestaurantOwner={isRestaurantOwner}
+            onChange={setIsRestaurantOwner}
+          />
+
           <button type="submit" className={styles.buttonSubmit}>
-            Criar
+            {isRestaurantOwner ? "Próximo" : "Criar"}
           </button>
 
           {error && <p className={styles.error}>{error}</p>}

@@ -77,7 +77,7 @@ export default function Register() {
             label="CNPJ"
             value={formData.cnpj}
             onChange={handleChange}
-            type="cpf"
+            type="cnpj"
             mask={cnpjMask}
           />
 
@@ -99,15 +99,6 @@ export default function Register() {
 
           {error && <p className={styles.error}>{error}</p>}
           {success && <p className={styles.success}>{success}</p>}
-
-          <div className={styles.register}>
-            <span>
-              Já tem uma conta?{" "}
-              <Link href="/login" className={styles.regiterLink}>
-                Faça login
-              </Link>
-            </span>
-          </div>
         </form>
       </div>
 
