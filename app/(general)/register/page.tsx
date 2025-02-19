@@ -11,6 +11,7 @@ import CustomInput from "@/app/shared/components/inputs/customInput/index";
 import CustomSelect from "@/app/shared/components/inputs/customSelect";
 import Image from "next/image";
 import RestaurantOwnerCheckbox from "@/app/shared/components/RestaurantOwnerCheckbox";
+import { cpfMask } from '@/app/shared/utils/masks/cpf';
 
 export default function Register() {
   const router = useRouter();
@@ -92,6 +93,7 @@ export default function Register() {
             value={formData.cpf}
             onChange={handleChange}
             type="cpf"
+            mask={cpfMask}
           />
 
           <CustomInput
