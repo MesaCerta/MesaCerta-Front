@@ -11,7 +11,7 @@ import CustomInput from "@/app/shared/components/inputs/customInput/index";
 import CustomSelect from "@/app/shared/components/inputs/customSelect";
 import Image from "next/image";
 import RestaurantOwnerCheckbox from "@/app/shared/components/RestaurantOwnerCheckbox";
-import { cpfMask } from '@/app/shared/utils/masks/cpf';
+import { cpfMask } from "@/app/shared/utils/masks/cpf";
 
 export default function Register() {
   const router = useRouter();
@@ -19,14 +19,8 @@ export default function Register() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isRestaurantOwner, setIsRestaurantOwner] = useState(false); 
+  const [isRestaurantOwner, setIsRestaurantOwner] = useState(false);
   const { user, setUser, setToken } = useAuthContext();
-
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/home");
-  //   }
-  // }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -47,9 +41,9 @@ export default function Register() {
       setUser(loginData.user);
       setToken(loginData.token);
 
-      alert("Registro realizado com sucesso!");
-      
-      if (isRestaurantOwner) {
+      if (!isRestaurantOwner) {
+        alert("Registro realizado com sucesso!");
+      } else if (isRestaurantOwner) {
         router.push("/registerRestaurant");
       } else {
         router.push("/home");

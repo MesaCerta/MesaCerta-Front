@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@/app/(general)/register/register.module.scss";
+import styles from "./customSelect.module.scss";
 import { ICustomSelectProps } from "@/app/shared/@types";
 
 export default function CustomSelect({

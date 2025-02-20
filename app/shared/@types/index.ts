@@ -9,6 +9,7 @@ interface IUserData {
   phone: string;
   birthdate?: string;
   cpf: string;
+  restaurants: IRestaurantData[];
 }
 
 interface ICardProps {

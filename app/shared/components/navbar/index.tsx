@@ -10,13 +10,17 @@ const Navbar = () => {
 
   const handleLogout = () => {
     const confirmed = window.confirm("Você realmente deseja sair?");
-
     if (confirmed) {
       setUser(null);
       setToken(null);
       localStorage.clear();
     }
   };
+
+  const displayName =
+    user?.restaurants && user.restaurants.length > 0
+      ? user.restaurants[0].name
+      : user?.name;
 
   return (
     <div className={styles.container}>
@@ -40,7 +44,7 @@ const Navbar = () => {
           <div className={styles.navright}>
             {user ? (
               <>
-                <p>{user.name}</p>
+                <p>{displayName}</p>
                 <button onClick={handleLogout} className={styles.logoutButton}>
                   Sair
                 </button>

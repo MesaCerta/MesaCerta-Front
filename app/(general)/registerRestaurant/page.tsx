@@ -22,7 +22,7 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const restaurantData = await createRestaurant({
+      await createRestaurant({
         name: formData.name,
         address: formData.address,
         phone: formData.phone,
