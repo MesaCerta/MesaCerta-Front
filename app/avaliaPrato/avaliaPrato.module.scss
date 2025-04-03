@@ -1,0 +1,107 @@
+.container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .titulo {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-items: center;
+  }
+  
+  .card {
+    display: flex;
+    flex-direction: column; // Empilha a imagem e o conteúdo
+    align-items: center;
+    background-color: #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%; // Mantém o card responsivo
+    max-width: 500px;
+    gap: 10px; // Adiciona espaço entre os elementos
+  }
+  
+  
+  .imagem {
+    width: 100%; // Faz a imagem ocupar toda a largura do card
+    height: auto; // Mantém a proporção da imagem
+    max-height: 200px; // Ajuste esse valor conforme necessário
+    object-fit: cover; // Garante que a imagem preencha o espaço sem distorcer
+    border-radius: 10px;
+  }
+  
+  
+  .info {
+    flex: 1;
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .subtitulo {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .avaliacao {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 5px;
+  
+    span {
+      cursor: pointer;
+    }
+  }
+  
+  .estrela {
+    color: gray;
+    font-size: 20px;
+  }
+  
+  .estrelaAtiva {
+    color: gold;
+    font-size: 20px;
+  }
+  
+  .comentario {
+    width: 100%;
+    height: 60px;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .botao {
+    background-color: blue;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: darkblue;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: 1fr; // Deixa os cards em coluna única em telas pequenas
+    }
+  
+    .card {
+      width: 90%; // Faz os cards ocuparem mais espaço sem ficarem espremidos
+    }
+  }
+  
+  

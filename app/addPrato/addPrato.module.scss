@@ -1,0 +1,100 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('/add_prato.jpg'); // Substitua pelo caminho da imagem
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .formWrapper {
+    background-color: #996D37;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    color: white;
+    box-sizing: border-box;
+    margin: 0;
+  }
+  
+  .title {
+    text-align: center;
+    margin-top: 2px;
+    margin-bottom: 30px;
+    font-size: 32px;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 18px;
+    }
+  
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #f0f0f0;
+      color: #333;
+      font-family: 'Times New Roman', Times, serif;
+    }
+  
+    textarea {
+      height: 80px;
+      resize: none;
+    }
+  
+    input[type="file"] {
+      padding: 0;
+      background: none;
+      font-family: 'Times New Roman', Times, serif;
+    }
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    margin-top: 30px;
+  
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-family: 'Times New Roman', Times, serif;
+    }
+  
+    .saveButton {
+      background-color: #28a745;
+      color: white;
+  
+      &:hover {
+        background-color: #218838;
+      }
+    }
+  
+    .cancelButton {
+      background-color: #dc3545;
+      color: white;
+  
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+  }
+  
