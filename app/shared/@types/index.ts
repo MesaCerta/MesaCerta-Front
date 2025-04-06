@@ -88,6 +88,7 @@ interface IScheduleData {
 
 interface IDishData extends IListData {
   description: string;
+  restaurantId?: string;
   price: number;
   mealType: string;
 }
@@ -101,12 +102,16 @@ interface IDetailsSectionProps {
   phone: string;
   schedule: IScheduleData[];
 }
+interface IRestaurantDetailsSectionProps {
+  restaurantId?: string;
+}
 
 export type {
   IUserData,
   IListData,
   ICardProps,
   IDishData,
+  IRestaurantDetailsSectionProps,
   ICustomSelectProps,
   IRestaurantData,
   ICustomInputProps,

@@ -9,7 +9,12 @@ import {
 import useFormattedPrice from "../../../hooks/FormattedPrice/useFormattedPrice";
 import useRenderStars from "../../../hooks/RenderStars/useRenderStars";
 
-const CardList: React.FC<ICardProps> = ({ item, rating, onClick, itemType }) => {
+const CardList: React.FC<ICardProps> = ({
+  item,
+  rating,
+  onClick,
+  itemType,
+}) => {
   const isRestaurant = (item: IListData): item is IRestaurantData => {
     return itemType === "restaurant";
   };
@@ -34,6 +39,7 @@ const CardList: React.FC<ICardProps> = ({ item, rating, onClick, itemType }) => 
 
         {isRestaurant(item) && <p>{item.phone}</p>}
         {isDish(item) && <p>{`Preço: ${formattedPrice}`}</p>}
+        {isDish(item) && <p>{`Tipo de refeição: ${item.mealType}`}</p>}
         <div className={styles.rating}>
           {stars}
           <span className={styles.reviewCount}>
@@ -46,4 +52,3 @@ const CardList: React.FC<ICardProps> = ({ item, rating, onClick, itemType }) => 
 };
 
 export default CardList;
-

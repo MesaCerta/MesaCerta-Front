@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   getAverageRatingDish,
   getAverageRatingRestaurant,
@@ -10,6 +10,11 @@ const useRatings = (items: IListData[], itemType: "restaurant" | "dish") => {
     [key: string]: { averageRating: number; totalReviews: number };
   }>({});
 
+  const itemIds = useMemo(
+    () => items.map((item) => item.id).join(","),
+    [items]
+  );
+
   useEffect(() => {
     const fetchRatings = async () => {
       const ratingsData: {
@@ -19,19 +24,19 @@ const useRatings = (items: IListData[], itemType: "restaurant" | "dish") => {
       for (const item of items) {
         let ratingData;
         if (itemType === "restaurant") {
-          ratingData = await getAverageRatingRestaurant(item.id);
+          ratingData = await getAverageRatingRestaurant(item.id!);
         } else {
-          ratingData = await getAverageRatingDish(item.id);
+          ratingData = await getAverageRatingDish(item.id!);
         }
 
-        ratingsData[item.id] = ratingData;
+        ratingsData[item.id!] = ratingData;
       }
 
       setRatings(ratingsData);
     };
 
     fetchRatings();
-  }, [items, itemType]);
+  }, [itemIds, itemType]);
 
   return ratings;
 };

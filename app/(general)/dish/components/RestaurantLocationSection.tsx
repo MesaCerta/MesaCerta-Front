@@ -1,9 +1,9 @@
 import React from "react";
-import { FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
-import styles from "@/app/(general)/restaurant/[id]/restaurantDetails.module.scss";
+import { FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import styles from "@/app/(general)/dish/[id]/dishDetails.module.scss";
 import { ILocationSectionProps } from "@/app/shared/@types";
 
-export const LocationSection: React.FC<ILocationSectionProps> = ({
+export const RestaurantLocationSection: React.FC<ILocationSectionProps> = ({
   address,
   phone,
 }) => {

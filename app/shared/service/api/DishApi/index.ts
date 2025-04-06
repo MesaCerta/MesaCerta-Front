@@ -28,7 +28,7 @@ export const getDishById = async (id: string) => {
 export const getAverageRatingDish = async (id: string) => {
   try {
     const response = await api.get(
-      `/reviews-dishes/${id}/average-rating`,
+      `/reviews-dishes/${id}/average-dishes`,
       configHeaders
     );
     return response.data;
