@@ -106,11 +106,28 @@ interface IScheduleData {
   closingTime: string;
 }
 
+interface IReviewDishData {
+  description: string;
+  rating: number;
+  userId: string;
+  dishId: string;
+}
+
+interface IReviewRestaurantData {
+  description: string;
+  rating: number;
+  userId: string;
+  restaurantId: string;
+}
+
+
 export type {
   IUserData,
   IListData,
   ICardProps,
   IDishData,
+  IReviewDishData,
+  IReviewRestaurantData,
   IRestaurantDetailsSectionProps,
   ICustomSelectProps,
   IRestaurantData,
