@@ -43,6 +43,8 @@ const RestaurantDetails = () => {
         <LocationSection
           address={restaurant.address}
           phone={restaurant.phone}
+          schedule={restaurant.schedule}
+          restaurantName={restaurant.name}
         />
       </div>
     </div>

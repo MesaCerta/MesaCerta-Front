@@ -43,10 +43,13 @@ const DishDetails = () => {
 
       <div className={styles.content}>
         <DishRatingsSection item={dish} />
-        <RestaurantDetailsSection restaurantId={dish.restaurantId!} />
+        <RestaurantDetailsSection restaurantId={dish.restaurantId} />
         <RestaurantLocationSection
           address={restaurant?.address!}
           phone={restaurant?.phone!}
+          schedule={restaurant?.schedule!}
+          restaurantName={restaurant?.name!}
+          dishName={dish.name}
         />
       </div>
     </div>
