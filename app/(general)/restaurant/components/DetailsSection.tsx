@@ -2,8 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 import styles from '@/app/(general)/restaurant/[id]/restaurantDetails.module.scss';
 import { IDetailsSectionProps } from '@/app/shared/@types';
+import { useRouter } from 'next/navigation';
 
-export const DetailsSection: React.FC<IDetailsSectionProps> = () => {
+export const DetailsSection: React.FC<IDetailsSectionProps> = ({ restaurantId }) => {
+  const router = useRouter();
+
   return (
     <section className={styles.detailsSection}>
       <h2>Detalhes</h2>
@@ -36,7 +39,12 @@ export const DetailsSection: React.FC<IDetailsSectionProps> = () => {
         </div>
       </div>
       
-      <button className={styles.verPratos}>Ver Pratos</button>
+      <button 
+        onClick={() => router.push(`/restaurant/${restaurantId}/dishes`)} 
+        className={styles.verPratos}
+      >
+        Ver Pratos
+      </button>
     </section>
   );
 };

@@ -1,7 +1,8 @@
 import { AxiosError } from "axios";
 import { api, configHeaders } from "../api";
+import { IReviewDishData, IReviewRestaurantData } from "@/app/shared/@types";
 
-export const createReviewDish = async (reviewData: IReviewDish) => {
+export const createReviewDish = async (reviewData: IReviewDishData) => {
   try {
     const response = await api.post(`/reviews-dishes`, reviewData, configHeaders);
     return response.data;
@@ -27,7 +28,7 @@ export const listReviewDishes = async () => {
   }
 };
 
-export const createReviewRestaurant = async (reviewData: IReviewRestaurant) => {
+export const createReviewRestaurant = async (reviewData: IReviewRestaurantData) => {
   try {
     const response = await api.post(`/reviews-restaurants`, reviewData, configHeaders);
     return response.data;

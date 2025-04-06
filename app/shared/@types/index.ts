@@ -96,6 +96,7 @@ interface ILocationSectionProps {
 interface IDetailsSectionProps {
   phone: string;
   schedule: IScheduleData[];
+  restaurantId: string;
 }
 interface IRestaurantDetailsSectionProps {
   restaurantId?: string;
