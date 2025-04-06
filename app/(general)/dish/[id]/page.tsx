@@ -1,40 +1,57 @@
 "use client";
-import { IDishData } from "@/app/shared/@types";
-import { getDishById } from "@/app/shared/service";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import styles from "./dishDetails.module.scss";
+import { ImageGallery } from "../../restaurant/components/ImageGallery";
+import { Header } from "../../restaurant/components/Header";
+import { useDish } from "@/app/shared/hooks/useDish/useDish";
+import { RestaurantDetailsSection } from "../components/RestaurantDetailsSection";
+import { DishRatingsSection } from "../components/DishRatingsSection";
+import { IRestaurantData } from "@/app/shared/@types";
+import { getRestaurantById } from "@/app/shared/service";
+import { RestaurantLocationSection } from "../components/RestaurantLocationSection";
 
 const DishDetails = () => {
-  const [dish, setDish] = useState<IDishData | null>(null);
   const pathname = usePathname();
-  const router = useRouter();
+  const dishId = pathname.split("/").pop();
+
+  const { dish, error } = useDish(dishId);
+
+  const [restaurant, setRestaurant] = useState<IRestaurantData | null>(null);
 
   useEffect(() => {
-    const fetchDish = async () => {
-      const dishId = pathname.split("/").pop();
+    if (dish?.restaurantId) {
+      getRestaurantById(dish.restaurantId)
+        .then((data) => setRestaurant(data))
+        .catch((err) => console.error("Erro ao buscar restaurante:", err));
+    }
+  }, [dish?.restaurantId]);
 
-      try {
-        const fetchedDish = await getDishById(dishId!);
-        setDish(fetchedDish);
-      } catch (error) {
-        console.error("Erro ao buscar restaurante:", error);
-      }
-    };
-    fetchDish();
-  }, [pathname]);
+  if (error) {
+    return <div className={styles.error}>Erro ao carregar dados do prato</div>;
+  }
 
   if (!dish) {
-    return null;
+    return <div className={styles.notFound}>Prato não encontrado</div>;
   }
 
   return (
-    <div>
-      <button onClick={router.back}>Voltar</button>
-      <p>Nome do prato: {dish.name}</p>
-      <p>Imagem do prato: {dish.image}</p>
-      <p>Descrição do prato: {dish.description}</p>
-      <p>Preço do prato: {dish.price}</p>
-      <p>Tipo do prato: {dish.mealType}</p>
+    <div className={styles.container}>
+      <Header restaurantName={dish.name} />
+
+      <ImageGallery image={dish.image || ""} restaurantName={dish.name} />
+
+      <div className={styles.content}>
+        <DishRatingsSection item={dish} />
+        <RestaurantDetailsSection restaurantId={dish.restaurantId} />
+        <RestaurantLocationSection
+          address={restaurant?.address!}
+          phone={restaurant?.phone!}
+          schedule={restaurant?.schedule!}
+          restaurantName={restaurant?.name!}
+          dishName={dish.name}
+        />
+      </div>
     </div>
   );
 };

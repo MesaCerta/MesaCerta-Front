@@ -12,11 +12,13 @@ import { RatingsSection } from "../components/RatingsSection";
 const RestaurantDetails = () => {
   const pathname = usePathname();
   const restaurantId = pathname.split("/").pop();
-  
+
   const { restaurant, error } = useRestaurant(restaurantId);
 
   if (error) {
-    return <div className={styles.error}>Erro ao carregar dados do restaurante</div>;
+    return (
+      <div className={styles.error}>Erro ao carregar dados do restaurante</div>
+    );
   }
 
   if (!restaurant) {
@@ -26,21 +28,23 @@ const RestaurantDetails = () => {
   return (
     <div className={styles.container}>
       <Header restaurantName={restaurant.name} />
-      
-      <ImageGallery 
+
+      <ImageGallery
         image={restaurant.image || ""}
         restaurantName={restaurant.name}
       />
 
       <div className={styles.content}>
-        <RatingsSection />
-        <DetailsSection 
+        <RatingsSection item={restaurant} />
+        <DetailsSection
           phone={restaurant.phone}
           schedule={restaurant.schedule}
         />
-        <LocationSection 
+        <LocationSection
           address={restaurant.address}
           phone={restaurant.phone}
+          schedule={restaurant.schedule}
+          restaurantName={restaurant.name}
         />
       </div>
     </div>

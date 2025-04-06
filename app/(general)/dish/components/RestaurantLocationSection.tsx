@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { FaMapMarkerAlt, FaPhone } from "react-icons/fa";
-import styles from "@/app/(general)/restaurant/[id]/restaurantDetails.module.scss";
+import styles from "@/app/(general)/dish/[id]/dishDetails.module.scss";
 import { ILocationSectionProps } from "@/app/shared/@types";
-import { ReservationModal } from "../../../shared/components/ReservationModal/ReservationModal";
+import { ReservationModal } from "@/app/shared/components/ReservationModal/ReservationModal";
 
-export const LocationSection: React.FC<ILocationSectionProps> = ({
-  address,
-  phone,
-  schedule,
-  restaurantName,
-}) => {
+interface RestaurantLocationSectionProps extends ILocationSectionProps {
+  dishName: string;
+  restaurantName: string;
+}
+
+export const RestaurantLocationSection: React.FC<
+  RestaurantLocationSectionProps
+> = ({ address, phone, schedule, dishName, restaurantName }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => setIsModalOpen(true);
@@ -40,6 +42,7 @@ export const LocationSection: React.FC<ILocationSectionProps> = ({
         schedule={schedule}
         phone={phone}
         restaurantName={restaurantName}
+        dishName={dishName}
       />
     </section>
   );

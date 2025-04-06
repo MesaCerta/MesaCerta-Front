@@ -1,0 +1,131 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.modalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  cursor: default;
+}
+
+.modalHeader {
+  margin-bottom: 1.5rem;
+  position: relative;
+
+  h2 {
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  left: -1rem;
+  top: -1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+
+  &:hover {
+    color: #333;
+  }
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #333;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    font-size: 1rem;
+    appearance: none;
+
+    &:focus {
+      outline: none;
+      border-color: #c45c3c;
+    }
+  }
+
+  .numberInput {
+    text-align: left;
+    padding-right: 0.5rem;
+    width: 94.5%;
+    &::-webkit-inner-spin-button {
+      opacity: 1;
+      height: 2rem;
+      margin-right: 0.5rem;
+    }
+  }
+
+  .select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+  }
+}
+
+.dishInfo {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  border: 1px solid #eee;
+
+  p {
+    margin: 0;
+    color: #333;
+    font-size: 0.9rem;
+
+    strong {
+      color: #c45c3c;
+    }
+  }
+}
+
+.agendarButton {
+  width: 100%;
+  padding: 1rem;
+  background-color: #c45c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: darken(#c45c3c, 10%);
+  }
+}

@@ -1,15 +1,17 @@
 import React from "react";
-import styles from "@/app/(general)/restaurant/[id]/restaurantDetails.module.scss";
+import styles from "@/app/(general)/dish/[id]/dishDetails.module.scss";
 import useRenderStars from "@/app/shared/hooks/RenderStars/useRenderStars";
-import { IRestaurantData } from "@/app/shared/@types";
+import { IListData, IDishData } from "@/app/shared/@types";
 import useRatings from "@/app/shared/hooks/Rating/useRatings";
 
-type RatingsSectionProps = {
-  item: IRestaurantData;
+type DishRatingsSectionProps = {
+  item: IDishData;
 };
 
-export const RatingsSection: React.FC<RatingsSectionProps> = ({ item }) => {
-  const itemType = "restaurant";
+export const DishRatingsSection: React.FC<DishRatingsSectionProps> = ({
+  item,
+}) => {
+  const itemType = "dish";
   const ratings = useRatings([item], itemType);
   const rating = ratings[item.id!];
 
