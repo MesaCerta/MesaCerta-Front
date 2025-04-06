@@ -21,7 +21,7 @@ const RestaurantDetails = () => {
     );
   }
 
-  if (!restaurant) {
+  if (!restaurant || !restaurant.id) {
     return <div className={styles.notFound}>Restaurante não encontrado</div>;
   }
 
@@ -39,6 +39,7 @@ const RestaurantDetails = () => {
         <DetailsSection
           phone={restaurant.phone}
           schedule={restaurant.schedule}
+          restaurantId={restaurant.id}
         />
         <LocationSection
           address={restaurant.address}
