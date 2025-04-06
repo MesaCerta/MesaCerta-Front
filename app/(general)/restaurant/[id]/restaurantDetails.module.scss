@@ -187,6 +187,21 @@
       }
     }
   }
+  flex-grow: 1;
+}
+
+.buttonEvaluations, .buttonDish {
+  width: 100%;
+  padding: 1rem;
+  background-color: #b94618;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  margin-top: auto;
 }
 
 .details {
@@ -232,19 +247,6 @@
   }
 }
 
-.verPratos {
-  width: 100%;
-  padding: 1rem;
-  background-color: #b94618;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: center;
-  margin-top: auto;
-}
 
 .location {
   height: 100%;

@@ -41,7 +41,7 @@ export const DetailsSection: React.FC<IDetailsSectionProps> = ({ restaurantId })
       
       <button 
         onClick={() => router.push(`/restaurant/${restaurantId}/dishes`)} 
-        className={styles.verPratos}
+        className={styles.buttonDish}
       >
         Ver Pratos
       </button>
