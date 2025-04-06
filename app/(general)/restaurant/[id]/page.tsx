@@ -34,8 +34,14 @@ const RestaurantDetails = () => {
 
       <div className={styles.content}>
         <RatingsSection />
-        <DetailsSection />
-        <LocationSection />
+        <DetailsSection 
+          phone={restaurant.phone}
+          schedule={restaurant.schedule}
+        />
+        <LocationSection 
+          address={restaurant.address}
+          phone={restaurant.phone}
+        />
       </div>
     </div>
   );

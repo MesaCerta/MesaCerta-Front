@@ -1,8 +1,9 @@
 import React from 'react';
 import { FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 import styles from '@/app/(general)/restaurant/[id]/restaurantDetails.module.scss';
+import { ILocationSectionProps } from '@/app/shared/@types';
 
-export const LocationSection: React.FC = () => {
+export const LocationSection: React.FC<ILocationSectionProps> = ({ address, phone }) => {
   return (
     <section className={styles.infoSection}>
       <div className={styles.location}>
@@ -10,19 +11,11 @@ export const LocationSection: React.FC = () => {
         <div className={styles.contactInfo}>
           <p>
             <FaMapMarkerAlt />
-            Padre Orcolaga, 56, 20008 Donostia-San Sebastián Espanha
+            {address}
           </p>
           <p>
             <FaPhone />
-            +55 87 9 9999 9999
-          </p>
-          <p>
-            <FaEnvelope />
-            Site
-          </p>
-          <p>
-            <FaEnvelope />
-            Email
+            {phone}
           </p>
         </div>
         <button className={styles.reserveButton}>Reserve Aqui</button>
