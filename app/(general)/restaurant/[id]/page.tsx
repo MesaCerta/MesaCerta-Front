@@ -1,39 +1,48 @@
 "use client";
-import { IRestaurantData } from "@/app/shared/@types";
-import { getRestaurantById } from "@/app/shared/service";
-import { usePathname, useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import React from "react";
+import styles from "./restaurantDetails.module.scss";
+import { useRestaurant } from "@/app/shared/hooks/useRestaurant/useRestaurant";
+import { DetailsSection } from "../components/DetailsSection";
+import { Header } from "../components/Header";
+import { ImageGallery } from "../components/ImageGallery";
+import { LocationSection } from "../components/LocationSection";
+import { RatingsSection } from "../components/RatingsSection";
 
 const RestaurantDetails = () => {
-  const [restaurant, setRestaurant] = useState<IRestaurantData | null>(null);
   const pathname = usePathname();
-  const router = useRouter();
+  const restaurantId = pathname.split("/").pop();
+  
+  const { restaurant, error } = useRestaurant(restaurantId);
 
-  useEffect(() => {
-    const fetchRestaurant = async () => {
-      const restaurantId = pathname.split("/").pop();
-
-      try {
-        const fetchedRestaurant = await getRestaurantById(restaurantId!);
-        setRestaurant(fetchedRestaurant);
-      } catch (error) {
-        console.error("Erro ao buscar restaurante:", error);
-      }
-    };
-    fetchRestaurant();
-  }, [pathname]);
+  if (error) {
+    return <div className={styles.error}>Erro ao carregar dados do restaurante</div>;
+  }
 
   if (!restaurant) {
-    return null;
+    return <div className={styles.notFound}>Restaurante não encontrado</div>;
   }
 
   return (
-    <div>
-      <button onClick={router.back}>Voltar</button>
-      <p>Nome do restaurante: {restaurant.name}</p>
-      <p>Imagem do restaurante: {restaurant.image}</p>
-      <p>Telefone do restaurante: {restaurant.phone}</p>
-      <p>Endereço do restaurante: {restaurant.address}</p>
+    <div className={styles.container}>
+      <Header restaurantName={restaurant.name} />
+      
+      <ImageGallery 
+        image={restaurant.image || ""}
+        restaurantName={restaurant.name}
+      />
+
+      <div className={styles.content}>
+        <RatingsSection />
+        <DetailsSection 
+          phone={restaurant.phone}
+          schedule={restaurant.schedule}
+        />
+        <LocationSection 
+          address={restaurant.address}
+          phone={restaurant.phone}
+        />
+      </div>
     </div>
   );
 };

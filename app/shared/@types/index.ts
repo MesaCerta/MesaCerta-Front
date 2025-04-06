@@ -81,7 +81,7 @@ interface IRestaurantData extends IListData {
 }
 
 interface IScheduleData {
-  day: string;
+  dayOfWeek: string;
   openingTime: string;
   closingTime: string;
 }
@@ -90,6 +90,16 @@ interface IDishData extends IListData {
   description: string;
   price: number;
   mealType: string;
+}
+
+interface ILocationSectionProps {
+  address: string;
+  phone: string;
+}
+
+interface IDetailsSectionProps {
+  phone: string;
+  schedule: IScheduleData[];
 }
 
 export type {
@@ -104,4 +114,7 @@ export type {
   IEventProps,
   IAuthContextData,
   IChildrenProps,
+  IScheduleData,
+  ILocationSectionProps,
+  IDetailsSectionProps,
 };
