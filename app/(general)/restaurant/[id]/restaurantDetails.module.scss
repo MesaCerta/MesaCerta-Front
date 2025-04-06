@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 .container {
     padding: 2rem;
     max-width: 1200px;
@@ -6,13 +8,14 @@
   
   .header {
     margin-bottom: 2rem;
+    font-family: "Montserrat", sans-serif;
   
     .backButton {
       display: flex;
       align-items: center;
       gap: 0.5rem;
       font-size: 1.1rem;
-      color: #666;
+      color: #000000;
       margin-bottom: 1rem;
       cursor: pointer;
       border: none;
@@ -88,7 +91,7 @@
   }
   
   .infoSection {
-    background: #f8f8f8;
+    background: #DDD;
     padding: 1.5rem;
     border-radius: 8px;
     width: 370px;
@@ -113,7 +116,7 @@
   }
 
   .detailsSection{
-    background: #f8f8f8;
+    background: #DDD;
     padding: 1.5rem;
     border-radius: 8px;
     width: 410px;
