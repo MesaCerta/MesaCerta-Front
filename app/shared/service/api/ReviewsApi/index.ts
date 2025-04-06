@@ -53,3 +53,27 @@ export const listReviewRestaurants = async () => {
     throw error;
   }
 };
+
+export const getReviewsByRestaurantId = async (restaurantId: string) => {
+  try {
+    const response = await api.get(`/reviews-restaurants/restaurant/${restaurantId}`, configHeaders);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 404) {
+      return [];
+    }
+    throw error;
+  }
+};
+
+export const getReviewsByDishId = async (dishId: string) => {
+  try {
+    const response = await api.get(`/reviews-dishes/dish/${dishId}`, configHeaders);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError && error.response?.status === 404) {
+      return [];
+    }
+    throw error;
+  }
+};
