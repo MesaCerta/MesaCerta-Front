@@ -10,21 +10,21 @@
   
 }
 
-/* Responsividade para telas menores */
+
 @media (max-width: 768px) {
   .container {
-    padding: 0 1rem; /* Adiciona um espaçamento lateral pra evitar conteúdo colado na borda */
-    margin-top: 10px; /* Reduz margem superior em telas pequenas */
+    padding: 0 1rem;
+    margin-top: 10px;
     width: 100%;
     box-sizing: border-box;
   }
 
   .topLevel {
-    padding: 1rem 0; /* Um pouco de respiro vertical */
+    padding: 1rem 0;
   }
 }
 
-/* Para telas muito pequenas (celulares pequenos) */
+
 @media (max-width: 480px) {
   .container {
     padding: 0 0.5rem;

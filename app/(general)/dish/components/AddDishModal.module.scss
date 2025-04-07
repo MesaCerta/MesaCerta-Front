@@ -156,7 +156,6 @@
   display: none;
 }
 
-/* Telas pequenas (smartphones até 480px) */
 @media (max-width: 480px) {
   .modalContent {
     padding: 15px;
@@ -186,7 +185,7 @@
   }
 }
 
-/* Telas médias (tablets entre 481px e 768px) */
+
 @media (min-width: 481px) and (max-width: 768px) {
   .modalContent {
     padding: 20px;
@@ -207,7 +206,7 @@
   }
 }
 
-/* Telas grandes (desktops acima de 1200px) */
+
 @media (min-width: 1200px) {
   .modalContent {
     max-width: 600px;

@@ -110,7 +110,6 @@
   }
   
 
-  /* Ajustes para telas menores */
 @media (max-width: 1024px) {
   .imageSection {
     display: none;
@@ -122,7 +121,7 @@
   }
 }
 
-/* Já existente, mantido aqui só pra clareza (ok deixar como está) */
+
 @media (max-width: 768px) {
   .pageContainer {
     flex-direction: column;
@@ -139,7 +138,7 @@
   }
 }
 
-/* Reexibir imagem em telas grandes (desktop) */
+
 @media (min-width: 1025px) {
   .imageSection {
     display: flex; 
