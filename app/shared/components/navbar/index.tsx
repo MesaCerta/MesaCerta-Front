@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./navbar.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/icons/logo_transparent.png";
 import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
+import { RestaurantRegistrationModal } from "../RestaurantRegistrationModal/RestaurantRegistrationModal";
 
 const Navbar = () => {
   const { user, setUser, setToken } = useAuthContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLogout = () => {
     const confirmed = window.confirm("Você realmente deseja sair?");
@@ -17,10 +19,15 @@ const Navbar = () => {
     }
   };
 
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
   const displayName =
     user?.restaurants && user.restaurants.length > 0
       ? user.restaurants[0].name
       : user?.name;
+
+  const restaurantId = user?.restaurants?.[0]?.id;
 
   return (
     <div className={styles.container}>
@@ -44,7 +51,24 @@ const Navbar = () => {
           <div className={styles.navright}>
             {user ? (
               <>
-                <p>{displayName}</p>
+                {!user.restaurants?.length && (
+                  <button
+                    onClick={handleOpenModal}
+                    className={styles.restaurantButton}
+                  >
+                    Tenho um estabelecimento
+                  </button>
+                )}
+                {restaurantId ? (
+                  <Link
+                    href={`/restaurant/${restaurantId}`}
+                    className={styles.navLink}
+                  >
+                    <p>{displayName}</p>
+                  </Link>
+                ) : (
+                  <p>{displayName}</p>
+                )}
                 <button onClick={handleLogout} className={styles.logoutButton}>
                   Sair
                 </button>
@@ -57,6 +81,10 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
+      <RestaurantRegistrationModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };

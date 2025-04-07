@@ -56,7 +56,7 @@ const ListItems = <T extends IListData>({
             perMove: 1,
             gap: items.length <= 2 ? "20px" : "10px", // Ajuste o gap para 1 ou 2 itens
             pagination: true,
-            
+
             arrows: items.length >= 4, // Esconde as setas se houver menos de 4 itens
             breakpoints: {
               1024: {

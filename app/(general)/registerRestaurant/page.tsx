@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./registerRestaurant.module.scss";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/shared/contexts";
 import { createRestaurant } from "@/app/shared/service";
@@ -47,7 +46,7 @@ export default function Register() {
 
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.leftSide}>
+      <div className={`${styles.leftSide} formSection`}>
         <h1 className={styles.title}>Registro de Restaurante</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <CustomInput

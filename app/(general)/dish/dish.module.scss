@@ -7,5 +7,26 @@
 .container {
   text-align: center;
   margin-top: 20px;
-  
+  width: 100%;
+  position: relative;
+}
+
+.addDishButton {
+  position: absolute;
+  right: 120px;
+  top: 60px;
+  background-color: #c45c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+
+  &:hover {
+    background-color: darken(#c45c3c, 10%);
+  }
 }

@@ -27,7 +27,10 @@ const ScheduleInput: React.FC<Props> = ({ onChange }) => {
   const handleCheckboxChange = (day: string, checked: boolean) => {
     if (checked) {
       setSchedule((prev) => {
-        const newSchedule = [...prev, { day, openingTime: "", closingTime: "" }];
+        const newSchedule = [
+          ...prev,
+          { day, openingTime: "", closingTime: "" },
+        ];
         onChange(newSchedule);
         return newSchedule;
       });

@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getReviewsByDishId } from "@/app/shared/service/api/ReviewsApi";
+import { getDishById } from "@/app/shared/service/api/DishApi";
 import styles from "./reviews.module.scss";
 import { FaStar } from "react-icons/fa";
 import { IReview } from "@/app/shared/@types";
 import { RatingModal } from "@/app/shared/components/RatingModal/RatingModal";
+import { useAuthContext } from "@/app/shared/contexts";
 
 export default function DishReviews({ params }: { params: { id: string } }) {
   const [reviews, setReviews] = useState<IReview[]>([]);
@@ -14,39 +16,58 @@ export default function DishReviews({ params }: { params: { id: string } }) {
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dishName, setDishName] = useState("Prato");
+  const [isRestaurantOwner, setIsRestaurantOwner] = useState(false);
   const router = useRouter();
+  const { user } = useAuthContext();
 
   useEffect(() => {
-    const fetchReviews = async () => {
+    const fetchData = async () => {
       try {
-        const fetchedReviews = await getReviewsByDishId(params.id);
-        setReviews(fetchedReviews);
+        const [fetchedReviews, dish] = await Promise.all([
+          getReviewsByDishId(params.id),
+          getDishById(params.id),
+        ]);
+
+        // Verifica se o usuário é dono do restaurante do prato
+        if (user?.restaurants && user.restaurants.length > 0) {
+          const isOwner = user.restaurants.some(
+            (r) => r.id === dish.restaurantId
+          );
+          setIsRestaurantOwner(isOwner);
+        }
+
+        const sortedReviews = [...fetchedReviews].sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        setReviews(sortedReviews);
+        setDishName(dish.name);
       } catch (error) {
         setError("Erro ao carregar avaliações");
-        console.error("Error fetching reviews:", error);
+        console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchReviews();
-  }, [params.id]);
+    fetchData();
+  }, [params.id, user]);
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, index) => (
       <FaStar
         key={index}
-        className={`${styles.star} ${index < rating ? styles.active : ''}`}
+        className={`${styles.star} ${index < rating ? styles.active : ""}`}
       />
     ));
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     });
   };
 
@@ -56,11 +77,14 @@ export default function DishReviews({ params }: { params: { id: string } }) {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    // Refresh reviews after closing modal
     const fetchReviews = async () => {
       try {
         const fetchedReviews = await getReviewsByDishId(params.id);
-        setReviews(fetchedReviews);
+        const sortedReviews = [...fetchedReviews].sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        setReviews(sortedReviews);
       } catch (error) {
         console.error("Error refreshing reviews:", error);
       }
@@ -84,23 +108,30 @@ export default function DishReviews({ params }: { params: { id: string } }) {
         </button>
         <div className={styles.titleContainer}>
           <h1>Avaliações do Prato</h1>
-          <button className={styles.addReviewButton} onClick={handleOpenModal}>
-            Adicionar Avaliação
-          </button>
+          {!isRestaurantOwner && (
+            <button
+              className={styles.addReviewButton}
+              onClick={handleOpenModal}
+            >
+              Adicionar Avaliação
+            </button>
+          )}
         </div>
       </div>
 
       <div className={styles.reviewsList}>
         {reviews.length === 0 ? (
-          <p className={styles.noReviews}>Ainda não há avaliações para este prato.</p>
+          <p className={styles.noReviews}>
+            Ainda não há avaliações para este prato.
+          </p>
         ) : (
           reviews.map((review) => (
             <div key={review.id} className={styles.reviewCard}>
               <div className={styles.reviewHeader}>
-                <div className={styles.stars}>
-                  {renderStars(review.rating)}
-                </div>
-                <span className={styles.date}>{formatDate(review.createdAt)}</span>
+                <div className={styles.stars}>{renderStars(review.rating)}</div>
+                <span className={styles.date}>
+                  {formatDate(review.createdAt)}
+                </span>
               </div>
               <p className={styles.description}>{review.description}</p>
             </div>
@@ -109,7 +140,7 @@ export default function DishReviews({ params }: { params: { id: string } }) {
       </div>
 
       {isModalOpen && (
-        <RatingModal 
+        <RatingModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           dishId={params.id}
@@ -118,4 +149,4 @@ export default function DishReviews({ params }: { params: { id: string } }) {
       )}
     </div>
   );
-} 
+}

@@ -1,5 +1,5 @@
 import { api, configHeaders } from "../api";
-
+import { IDishData } from "@/app/shared/@types";
 import { AxiosError } from "axios";
 
 export const ListDishes = async () => {
@@ -51,6 +51,20 @@ export const getAverageRatingDish = async (id: string) => {
           averageRating: 0,
           totalReviews: 0,
         }; // Retorna 0 caso não encontre o restaurante ou não haja avaliações
+      }
+    }
+    throw error;
+  }
+};
+
+export const createDish = async (dishData: IDishData) => {
+  try {
+    const response = await api.post(`/dishes`, dishData, configHeaders);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        return { error: error.response.data.message || "Erro ao criar prato." };
       }
     }
     throw error;
