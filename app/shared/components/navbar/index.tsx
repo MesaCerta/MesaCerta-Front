@@ -64,10 +64,10 @@ const Navbar = () => {
                     href={`/restaurant/${restaurantId}`}
                     className={styles.navLink}
                   >
-                    <p>{displayName}</p>
+                    {displayName}
                   </Link>
                 ) : (
-                  <p>{displayName}</p>
+                  <span className={styles.navLink}>{displayName}</span>
                 )}
                 <button onClick={handleLogout} className={styles.logoutButton}>
                   Sair

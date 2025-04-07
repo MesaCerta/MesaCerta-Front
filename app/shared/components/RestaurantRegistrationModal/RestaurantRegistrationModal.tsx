@@ -8,6 +8,7 @@ import useHandleChangeRestaurant from "@/app/shared/hooks/HandleChangeRestaurant
 import { cnpjMask } from "@/app/shared/utils/masks/cnpj";
 import { ModalScheduleInput } from "../ModalScheduleInput/ModalScheduleInput";
 import Image from "next/image";
+import { compressImageFromUrl } from "@/app/shared/utils/imageCompression";
 
 interface RestaurantRegistrationModalProps {
   isOpen: boolean;
@@ -28,19 +29,24 @@ export const RestaurantRegistrationModal: React.FC<
     fileInputRef.current?.click();
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setImagePreview(base64String);
+      try {
+        const imageUrl = URL.createObjectURL(file);
+        setImagePreview(imageUrl);
+
+        const compressedImage = await compressImageFromUrl(imageUrl);
         setFormData((prev) => ({
           ...prev,
-          image: base64String,
+          image: compressedImage,
         }));
-      };
-      reader.readAsDataURL(file);
+
+        // Limpar a URL criada para evitar vazamento de memória
+        URL.revokeObjectURL(imageUrl);
+      } catch (err) {
+        setError("Erro ao processar a imagem. Por favor, tente novamente.");
+      }
     }
   };
 
@@ -57,7 +63,6 @@ export const RestaurantRegistrationModal: React.FC<
         ownerId: user!.id,
       });
 
-      // Atualiza o usuário no contexto adicionando o novo restaurante
       if (user) {
         setUser({
           ...user,
@@ -98,8 +103,8 @@ export const RestaurantRegistrationModal: React.FC<
                 <Image
                   src={imagePreview}
                   alt="Preview"
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             ) : (

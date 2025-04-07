@@ -5,16 +5,22 @@ import { AxiosError } from "axios";
 
 export const createRestaurant = async (restaurantData: IRestaurantData) => {
   try {
-    const response = await api.post(`/restaurants`, restaurantData, configHeaders);
+    const response = await api.post(
+      `/restaurants`,
+      restaurantData,
+      configHeaders
+    );
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
       if (error.response) {
-        return { error: error.response.data.message || "Erro ao criar restaurante." };
+        return {
+          error: error.response.data.message || "Erro ao criar restaurante.",
+        };
       }
     }
-    throw error;
-  }
+    throw error;
+  }
 };
 
 export const ListRestaurants = async () => {
@@ -39,7 +45,6 @@ export const getRestaurantById = async (id: string) => {
     throw error;
   }
 };
-
 
 export const getAverageRatingRestaurant = async (id: string) => {
   try {
