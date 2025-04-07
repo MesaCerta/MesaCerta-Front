@@ -11,18 +11,19 @@
   font-family: "Montserrat", sans-serif;
 
   .backButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 12px 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #000000;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    border: none;
-    background: none;
-    padding: 0.5rem;
-
+    gap: 8px;
+    font-weight: 500;
+    padding-bottom: 1rem;
+  
     &:hover {
-      color: #333;
+      color: #1a1a1a;
     }
   }
 

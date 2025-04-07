@@ -5,21 +5,15 @@ import { useRouter } from "next/navigation";
 import { getReviewsByDishId } from "@/app/shared/service/api/ReviewsApi";
 import styles from "./reviews.module.scss";
 import { FaStar } from "react-icons/fa";
-
-interface IReview {
-  id: string;
-  rating: number;
-  description: string;
-  userId: string;
-  dishId: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { IReview } from "@/app/shared/@types";
+import { RatingModal } from "@/app/shared/components/RatingModal/RatingModal";
 
 export default function DishReviews({ params }: { params: { id: string } }) {
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dishName, setDishName] = useState("Prato");
   const router = useRouter();
 
   useEffect(() => {
@@ -56,6 +50,24 @@ export default function DishReviews({ params }: { params: { id: string } }) {
     });
   };
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // Refresh reviews after closing modal
+    const fetchReviews = async () => {
+      try {
+        const fetchedReviews = await getReviewsByDishId(params.id);
+        setReviews(fetchedReviews);
+      } catch (error) {
+        console.error("Error refreshing reviews:", error);
+      }
+    };
+    fetchReviews();
+  };
+
   if (loading) {
     return <div className={styles.loading}>Carregando avaliações...</div>;
   }
@@ -70,7 +82,12 @@ export default function DishReviews({ params }: { params: { id: string } }) {
         <button className={styles.backButton} onClick={() => router.back()}>
           ← Voltar
         </button>
-        <h1>Avaliações do Prato</h1>
+        <div className={styles.titleContainer}>
+          <h1>Avaliações do Prato</h1>
+          <button className={styles.addReviewButton} onClick={handleOpenModal}>
+            Adicionar Avaliação
+          </button>
+        </div>
       </div>
 
       <div className={styles.reviewsList}>
@@ -90,6 +107,15 @@ export default function DishReviews({ params }: { params: { id: string } }) {
           ))
         )}
       </div>
+
+      {isModalOpen && (
+        <RatingModal 
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          dishId={params.id}
+          dishName={dishName}
+        />
+      )}
     </div>
   );
 } 

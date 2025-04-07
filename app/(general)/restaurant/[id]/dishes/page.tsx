@@ -9,10 +9,17 @@ import styles from "./dishes.module.scss";
 import { FaStar } from "react-icons/fa";
 import { RatingModal } from "@/app/shared/components/RatingModal/RatingModal";
 
-export default function RestaurantDishes({ params }: { params: { id: string } }) {
+export default function RestaurantDishes({
+  params,
+}: {
+  params: { id: string };
+}) {
   const [dishes, setDishes] = useState<IDishData[]>([]);
   const router = useRouter();
-  const [selectedDish, setSelectedDish] = useState<{ id: string; name: string } | null>(null);
+  const [selectedDish, setSelectedDish] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
 
   useEffect(() => {
     const fetchDishes = async () => {
@@ -44,10 +51,13 @@ export default function RestaurantDishes({ params }: { params: { id: string } })
 
   return (
     <div className={styles.container}>
+      <button className={styles.backButton} onClick={() => router.back()}>
+        ← Voltar
+      </button>
       <div className={styles.dishesList}>
         {dishes.map((dish) => (
-          <div 
-            key={dish.id} 
+          <div
+            key={dish.id}
             className={styles.dishCard}
             onClick={() => handleDishClick(dish.id)}
           >
@@ -59,7 +69,7 @@ export default function RestaurantDishes({ params }: { params: { id: string } })
                 <p className={styles.price}>
                   R$ {Number(dish.price).toFixed(2)}
                 </p>
-                <button 
+                <button
                   className={styles.rateButton}
                   onClick={(e) => handleRateClick(e, dish)}
                 >
@@ -100,4 +110,4 @@ export default function RestaurantDishes({ params }: { params: { id: string } })
       )}
     </div>
   );
-} 
+}
