@@ -51,8 +51,15 @@ const Navbar = () => {
           <div className={styles.navright}>
             {user ? (
               <>
+                {!user.restaurants?.length && (
+                  <button
+                    onClick={handleOpenModal}
+                    className={styles.restaurantButton}
+                  >
+                    Tenho um estabelecimento
+                  </button>
+                )}
                 {restaurantId ? (
-                  // Caso seja o nome de um restaurante, redireciona para a página do restaurante
                   <Link
                     href={`/restaurant/${restaurantId}`}
                     className={styles.navLink}
@@ -61,15 +68,6 @@ const Navbar = () => {
                   </Link>
                 ) : (
                   <p>{displayName}</p>
-                )}
-
-                {!user.restaurants?.length && (
-                  <button
-                    onClick={handleOpenModal}
-                    className={styles.restaurantButton}
-                  >
-                    Tenho um estabelecimento
-                  </button>
                 )}
                 <button onClick={handleLogout} className={styles.logoutButton}>
                   Sair

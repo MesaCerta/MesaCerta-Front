@@ -32,7 +32,6 @@ export default function Dish() {
   };
 
   const handleSuccess = () => {
-    // Forçar a atualização do ListContainer
     setRefreshKey((prevKey) => prevKey + 1);
   };
 

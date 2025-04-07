@@ -56,7 +56,7 @@ export default function Register() {
 
   return (
     <div className={styles.pageContainer}>
-      <div className={styles.leftSide}>
+      <div className={`${styles.leftSide} formSection`}>
         <h1 className={styles.title}>Cadastro Usuário</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
           <CustomInput

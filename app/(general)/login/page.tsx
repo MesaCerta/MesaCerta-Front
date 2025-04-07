@@ -38,7 +38,7 @@ export default function Login() {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.formSection}>
+      <div className={`${styles.formSection} formSection`}>
         <div className={styles.formContainer}>
           <h1 className={styles.title}>Login</h1>
           <form className={styles.form} onSubmit={handleSubmit}>
