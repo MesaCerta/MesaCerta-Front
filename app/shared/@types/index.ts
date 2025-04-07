@@ -121,6 +121,16 @@ interface IReviewRestaurantData {
   restaurantId: string;
 }
 
+interface IReview {
+  id: string;
+  rating: number;
+  description: string;
+  userId: string;
+  dishId?: string;
+  restaurantId?: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
 export type {
   IUserData,
@@ -129,6 +139,7 @@ export type {
   IDishData,
   IReviewDishData,
   IReviewRestaurantData,
+  IReview,
   IRestaurantDetailsSectionProps,
   ICustomSelectProps,
   IRestaurantData,

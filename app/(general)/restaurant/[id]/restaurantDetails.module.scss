@@ -11,18 +11,19 @@
   font-family: "Montserrat", sans-serif;
 
   .backButton {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 12px 0;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #000000;
-    margin-bottom: 1rem;
-    cursor: pointer;
-    border: none;
-    background: none;
-    padding: 0.5rem;
-
+    gap: 8px;
+    font-weight: 500;
+    padding-bottom: 1rem;
+  
     &:hover {
-      color: #333;
+      color: #1a1a1a;
     }
   }
 
@@ -187,6 +188,21 @@
       }
     }
   }
+  flex-grow: 1;
+}
+
+.buttonEvaluations, .buttonDish {
+  width: 100%;
+  padding: 1rem;
+  background-color: #b94618;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  margin-top: auto;
 }
 
 .details {
@@ -232,19 +248,6 @@
   }
 }
 
-.verPratos {
-  width: 100%;
-  padding: 1rem;
-  background-color: #b94618;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-align: center;
-  margin-top: auto;
-}
 
 .location {
   height: 100%;

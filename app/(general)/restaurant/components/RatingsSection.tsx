@@ -3,6 +3,7 @@ import styles from "@/app/(general)/restaurant/[id]/restaurantDetails.module.scs
 import useRenderStars from "@/app/shared/hooks/RenderStars/useRenderStars";
 import { IRestaurantData } from "@/app/shared/@types";
 import useRatings from "@/app/shared/hooks/Rating/useRatings";
+import { useRouter } from "next/navigation";
 
 type RatingsSectionProps = {
   item: IRestaurantData;
@@ -12,8 +13,13 @@ export const RatingsSection: React.FC<RatingsSectionProps> = ({ item }) => {
   const itemType = "restaurant";
   const ratings = useRatings([item], itemType);
   const rating = ratings[item.id!];
+  const router = useRouter();
 
   const stars = useRenderStars(rating ? rating.averageRating : 0);
+
+  const handleViewReviews = () => {
+    router.push(`/restaurant/${item.id}/reviews`);
+  };
 
   return (
     <section className={styles.infoSection}>
@@ -34,6 +40,9 @@ export const RatingsSection: React.FC<RatingsSectionProps> = ({ item }) => {
           <p>Carregando avaliações...</p>
         )}
       </div>
+      <button onClick={handleViewReviews} className={styles.buttonEvaluations}>
+        Ver Avaliações
+      </button>
     </section>
   );
 };
