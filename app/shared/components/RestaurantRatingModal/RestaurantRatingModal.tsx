@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
-import { FaStar } from 'react-icons/fa';
-import styles from '../RatingModal/RatingModal.module.scss';
-import { createReviewRestaurant } from '@/app/shared/service/api/ReviewsApi';
-import { useAuthContext } from '../../contexts';
+import React, { useState, useEffect } from "react";
+import { FaStar } from "react-icons/fa";
+import styles from "../RatingModal/RatingModal.module.scss";
+import { createReviewRestaurant } from "@/app/shared/service/api/ReviewsApi";
+import { useAuthContext } from "../../contexts";
 
 interface RestaurantRatingModalProps {
   isOpen: boolean;
@@ -21,29 +21,44 @@ export const RestaurantRatingModal: React.FC<RestaurantRatingModalProps> = ({
 }) => {
   const [rating, setRating] = useState<number>(0);
   const [hover, setHover] = useState<number>(0);
-  const [description, setDescription] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [description, setDescription] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { user } = useAuthContext();
+
+  useEffect(() => {
+    const checkOwnership = () => {
+      if (user?.restaurants && user.restaurants.length > 0) {
+        const isOwner = user.restaurants.some((r) => r.id === restaurantId);
+        if (isOwner) {
+          setError("Você não pode avaliar seu próprio restaurante.");
+        }
+      }
+    };
+
+    if (isOpen) {
+      checkOwnership();
+    }
+  }, [isOpen, restaurantId, user]);
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     if (!rating) {
-      setError('Por favor, selecione uma classificação');
+      setError("Por favor, selecione uma classificação");
       return;
     }
 
     if (!description.trim()) {
-      setError('Por favor, adicione um comentário');
+      setError("Por favor, adicione um comentário");
       return;
     }
 
     if (!user?.id) {
-      setError('Você precisa estar logado para avaliar');
+      setError("Você precisa estar logado para avaliar");
       return;
     }
 
@@ -57,13 +72,13 @@ export const RestaurantRatingModal: React.FC<RestaurantRatingModalProps> = ({
         restaurantId,
       });
 
-      if ('error' in response) {
+      if ("error" in response) {
         setError(response.error);
       } else {
         onClose();
       }
     } catch (err) {
-      setError('Erro ao enviar avaliação. Tente novamente.');
+      setError("Erro ao enviar avaliação. Tente novamente.");
     } finally {
       setIsSubmitting(false);
     }
@@ -71,15 +86,15 @@ export const RestaurantRatingModal: React.FC<RestaurantRatingModalProps> = ({
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
-      <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <h2>Avaliar {restaurantName}</h2>
-        
+
         <div className={styles.starsContainer}>
           {[1, 2, 3, 4, 5].map((star) => (
             <FaStar
               key={star}
               className={`${styles.star} ${
-                (hover || rating) >= star ? styles.active : ''
+                (hover || rating) >= star ? styles.active : ""
               }`}
               onClick={() => setRating(star)}
               onMouseEnter={() => setHover(star)}
@@ -99,22 +114,22 @@ export const RestaurantRatingModal: React.FC<RestaurantRatingModalProps> = ({
         {error && <p className={styles.error}>{error}</p>}
 
         <div className={styles.buttons}>
-          <button 
-            className={styles.cancelButton} 
+          <button
+            className={styles.cancelButton}
             onClick={onClose}
             disabled={isSubmitting}
           >
             Cancelar
           </button>
-          <button 
-            className={styles.submitButton} 
+          <button
+            className={styles.submitButton}
             onClick={handleSubmit}
-            disabled={isSubmitting}
+            disabled={isSubmitting || Boolean(error)}
           >
-            {isSubmitting ? 'Enviando...' : 'Enviar Avaliação'}
+            {isSubmitting ? "Enviando..." : "Enviar Avaliação"}
           </button>
         </div>
       </div>
     </div>
   );
-}; 
+};

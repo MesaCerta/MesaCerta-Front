@@ -7,6 +7,7 @@ import styles from "./reviews.module.scss";
 import { FaStar } from "react-icons/fa";
 import { IReview } from "@/app/shared/@types";
 import { RestaurantRatingModal } from "@/app/shared/components/RestaurantRatingModal/RestaurantRatingModal";
+import { useAuthContext } from "@/app/shared/contexts";
 
 export default function RestaurantReviews({
   params,
@@ -19,6 +20,11 @@ export default function RestaurantReviews({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [restaurantName, setRestaurantName] = useState("Restaurante");
   const router = useRouter();
+  const { user } = useAuthContext();
+
+  // Verifica se o usuário é o dono do restaurante
+  const isRestaurantOwner =
+    user?.restaurants?.some((r) => r.id === params.id) ?? false;
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -96,9 +102,14 @@ export default function RestaurantReviews({
         </button>
         <div className={styles.titleContainer}>
           <h1>Avaliações do Restaurante</h1>
-          <button className={styles.addReviewButton} onClick={handleOpenModal}>
-            Adicionar Avaliação
-          </button>
+          {!isRestaurantOwner && (
+            <button
+              className={styles.addReviewButton}
+              onClick={handleOpenModal}
+            >
+              Adicionar Avaliação
+            </button>
+          )}
         </div>
       </div>
 
@@ -122,14 +133,12 @@ export default function RestaurantReviews({
         )}
       </div>
 
-      {isModalOpen && (
-        <RestaurantRatingModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          restaurantId={params.id}
-          restaurantName={restaurantName}
-        />
-      )}
+      <RestaurantRatingModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        restaurantId={params.id}
+        restaurantName={restaurantName}
+      />
     </div>
   );
 }
