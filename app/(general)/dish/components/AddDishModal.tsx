@@ -1,11 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef } from "react";
 import styles from "./AddDishModal.module.scss";
 import CustomInput from "@/app/shared/components/inputs/customInput";
 import CustomSelect from "@/app/shared/components/inputs/customSelect";
-import { useAuthContext } from "@/app/shared/contexts";
-import { createDish } from "@/app/shared/service/api/DishApi";
-import { NumericFormat } from "react-number-format";
 import Image from "next/image";
+import { useDishForm } from "@/app/shared/hooks/useDishForm";
+import { compressImageFromUrl } from "@/app/shared/utils/imageCompression";
 
 interface AddDishModalProps {
   isOpen: boolean;
@@ -13,115 +12,53 @@ interface AddDishModalProps {
   onSuccess: () => void;
 }
 
-const initialFormState = {
-  name: "",
-  description: "",
-  price: "",
-  mealType: "",
-  image: "",
-};
+const mealTypeOptions = [
+  { value: "Café da manhã", label: "Café da Manhã" },
+  { value: "Almoço", label: "Almoço" },
+  { value: "Jantar", label: "Jantar" },
+];
 
 const AddDishModal: React.FC<AddDishModalProps> = ({
   isOpen,
   onClose,
   onSuccess,
 }) => {
-  const { user } = useAuthContext();
-  const [formData, setFormData] = useState(initialFormState);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const {
+    formData,
+    imagePreview,
+    error,
+    isLoading,
+    setImagePreview,
+    handleChange,
+    handleSubmit,
+    updateImage,
+    setError,
+  } = useDishForm({ onSuccess, onClose, isOpen });
 
-  useEffect(() => {
-    if (!isOpen) {
-      setFormData(initialFormState);
-      setImagePreview(null);
-      setError("");
-    }
-  }, [isOpen]);
+  if (!isOpen) return null;
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
+      try {
+        const imageUrl = URL.createObjectURL(file);
+        setImagePreview(imageUrl);
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({
-          ...prev,
-          image: reader.result as string,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+        const compressedImage = await compressImageFromUrl(imageUrl);
+        updateImage(compressedImage);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setIsLoading(true);
-
-    try {
-      if (!user?.restaurants || user.restaurants.length === 0) {
-        setError("Você precisa ter um restaurante para adicionar pratos.");
-        setIsLoading(false);
-        return;
+        // Limpar a URL criada para evitar vazamento de memória
+        URL.revokeObjectURL(imageUrl);
+      } catch (err) {
+        setError("Erro ao processar a imagem. Por favor, tente novamente.");
       }
-
-      if (
-        !formData.name ||
-        !formData.description ||
-        !formData.price ||
-        !formData.mealType
-      ) {
-        setError("Por favor, preencha todos os campos obrigatórios.");
-        setIsLoading(false);
-        return;
-      }
-
-      const dishData = {
-        name: formData.name,
-        description: formData.description,
-        price: parseFloat(formData.price),
-        restaurantId: user.restaurants[0].id,
-        mealType: formData.mealType,
-        image: formData.image || undefined,
-      };
-
-      const response = await createDish(dishData);
-
-      if ("error" in response) {
-        setError(response.error);
-      } else {
-        setFormData(initialFormState);
-        setImagePreview(null);
-        onSuccess();
-        onClose();
-      }
-    } catch (err) {
-      setError("Erro ao adicionar prato. Por favor, tente novamente.");
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
-
-  if (!isOpen) return null;
 
   return (
     <div className={styles.modalOverlay}>
@@ -142,8 +79,8 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
                 <Image
                   src={imagePreview}
                   alt="Preview"
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             ) : (
@@ -199,11 +136,7 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
             label="Tipo de Refeição"
             value={formData.mealType}
             onChange={handleChange}
-            options={[
-              { value: "Café da manhã", label: "Café da Manhã" },
-              { value: "Almoço", label: "Almoço" },
-              { value: "Jantar", label: "Jantar" },
-            ]}
+            options={mealTypeOptions}
             required
           />
 
