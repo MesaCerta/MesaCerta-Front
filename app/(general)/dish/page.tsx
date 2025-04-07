@@ -24,6 +24,7 @@ export default function Dish() {
     <div className={styles.topLevel}>
       <Search onSearchChange={setSearchTerm} search={dishes} />
       <div className={styles.container}>
+        <button className={styles.addDishButton}>Adicionar Prato</button>
         <ListContainer
           fetchData={ListDishes}
           renderComponent={(items) => (

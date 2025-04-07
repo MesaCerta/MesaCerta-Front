@@ -20,7 +20,11 @@ export default function DishReviews({ params }: { params: { id: string } }) {
     const fetchReviews = async () => {
       try {
         const fetchedReviews = await getReviewsByDishId(params.id);
-        setReviews(fetchedReviews);
+        const sortedReviews = [...fetchedReviews].sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        setReviews(sortedReviews);
       } catch (error) {
         setError("Erro ao carregar avaliações");
         console.error("Error fetching reviews:", error);
@@ -36,17 +40,17 @@ export default function DishReviews({ params }: { params: { id: string } }) {
     return [...Array(5)].map((_, index) => (
       <FaStar
         key={index}
-        className={`${styles.star} ${index < rating ? styles.active : ''}`}
+        className={`${styles.star} ${index < rating ? styles.active : ""}`}
       />
     ));
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric'
+    return date.toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
     });
   };
 
@@ -60,7 +64,12 @@ export default function DishReviews({ params }: { params: { id: string } }) {
     const fetchReviews = async () => {
       try {
         const fetchedReviews = await getReviewsByDishId(params.id);
-        setReviews(fetchedReviews);
+        // Ordenar as avaliações do mais recente para o mais antigo
+        const sortedReviews = [...fetchedReviews].sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+        setReviews(sortedReviews);
       } catch (error) {
         console.error("Error refreshing reviews:", error);
       }
@@ -92,15 +101,17 @@ export default function DishReviews({ params }: { params: { id: string } }) {
 
       <div className={styles.reviewsList}>
         {reviews.length === 0 ? (
-          <p className={styles.noReviews}>Ainda não há avaliações para este prato.</p>
+          <p className={styles.noReviews}>
+            Ainda não há avaliações para este prato.
+          </p>
         ) : (
           reviews.map((review) => (
             <div key={review.id} className={styles.reviewCard}>
               <div className={styles.reviewHeader}>
-                <div className={styles.stars}>
-                  {renderStars(review.rating)}
-                </div>
-                <span className={styles.date}>{formatDate(review.createdAt)}</span>
+                <div className={styles.stars}>{renderStars(review.rating)}</div>
+                <span className={styles.date}>
+                  {formatDate(review.createdAt)}
+                </span>
               </div>
               <p className={styles.description}>{review.description}</p>
             </div>
@@ -109,7 +120,7 @@ export default function DishReviews({ params }: { params: { id: string } }) {
       </div>
 
       {isModalOpen && (
-        <RatingModal 
+        <RatingModal
           isOpen={isModalOpen}
           onClose={handleCloseModal}
           dishId={params.id}
@@ -118,4 +129,4 @@ export default function DishReviews({ params }: { params: { id: string } }) {
       )}
     </div>
   );
-} 
+}
