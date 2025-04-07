@@ -109,3 +109,47 @@
     }
   }
   
+
+  /* Ajustes para telas menores */
+@media (max-width: 1024px) {
+  .imageSection {
+    display: none;
+  }
+
+  .leftSide {
+    width: 100%;
+    height: 100vh;
+  }
+}
+
+/* Já existente, mantido aqui só pra clareza (ok deixar como está) */
+@media (max-width: 768px) {
+  .pageContainer {
+    flex-direction: column;
+  }
+
+  .leftSide,
+  .rightSide {
+    width: 100%;
+    height: auto;
+  }
+
+  .rightSide {
+    min-height: 300px;
+  }
+}
+
+/* Reexibir imagem em telas grandes (desktop) */
+@media (min-width: 1025px) {
+  .imageSection {
+    display: flex; 
+    flex: 1;
+    background-size: cover;
+  }
+
+  .leftSide {
+    width: 50%;
+    height: auto;
+  }
+}
+

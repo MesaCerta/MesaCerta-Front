@@ -155,3 +155,71 @@
 .hiddenInput {
   display: none;
 }
+
+/* Telas pequenas (smartphones até 480px) */
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 15px;
+    max-height: 80vh;
+  }
+
+  .modalHeader h2 {
+    font-size: 20px;
+  }
+
+  .error {
+    font-size: 12px;
+  }
+
+  .cancelButton,
+  .submitButton {
+    flex: 1 1 100%;
+    font-size: 14px;
+  }
+
+  .imageUploadContainer {
+    height: 150px;
+  }
+
+  .uploadPlaceholder {
+    font-size: 14px;
+  }
+}
+
+/* Telas médias (tablets entre 481px e 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .modalContent {
+    padding: 20px;
+    max-height: 85vh;
+  }
+
+  .modalHeader h2 {
+    font-size: 22px;
+  }
+
+  .cancelButton,
+  .submitButton {
+    font-size: 15px;
+  }
+
+  .uploadPlaceholder {
+    font-size: 15px;
+  }
+}
+
+/* Telas grandes (desktops acima de 1200px) */
+@media (min-width: 1200px) {
+  .modalContent {
+    max-width: 600px;
+  }
+
+  .modalHeader h2 {
+    font-size: 26px;
+  }
+
+  .cancelButton,
+  .submitButton {
+    font-size: 17px;
+    padding: 12px 24px;
+  }
+}

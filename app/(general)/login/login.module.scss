@@ -80,3 +80,72 @@
   flex: 1;
   position: relative;
 }
+
+/* Responsividade para telas menores - tablet e celular */
+@media (max-width: 1024px) {
+  .wrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .imageSection {
+    display: none; /* Oculta imagem */
+  }
+
+  .formSection {
+    flex: unset;
+    width: 100%; /* Ocupa toda a largura */
+    height: 100vh; /* Preenche a tela verticalmente */
+  }
+}
+
+/* Ajustes adicionais para tablets/celulares */
+@media (max-width: 768px) {
+  .formContainer {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .buttonSubmmit {
+    font-size: 0.95rem;
+    padding: 0.7rem 1.3rem;
+  }
+
+  .inputGroup {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* Para celulares pequenos */
+@media (max-width: 480px) {
+  .formContainer {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
+  .buttonSubmmit {
+    width: 100%;
+    padding: 0.9rem;
+    font-size: 1rem;
+  }
+}
+
+/* Reexibir imagem em telas grandes */
+@media (min-width: 1025px) {
+  .imageSection {
+    display: block;
+  }
+
+  .formSection {
+    flex: 1;
+    height: auto;
+  }
+}

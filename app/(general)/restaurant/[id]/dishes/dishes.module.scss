@@ -143,3 +143,101 @@
     background-color: darken(#c45c3c, 10%);
   }
 }
+
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .dishCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dishInfo {
+    padding-right: 0;
+
+    h3 {
+      font-size: 1rem;
+    }
+
+    .description {
+      font-size: 0.85rem;
+    }
+
+    .mealType {
+      font-size: 0.7rem;
+    }
+  }
+
+  .priceAndRating {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    .price {
+      font-size: 0.95rem;
+    }
+
+    .rateButton {
+      padding: 6px 10px;
+      font-size: 0.85rem;
+    }
+  }
+
+  .dishImage {
+    width: 100%;
+    height: 160px;
+    border-radius: 6px;
+
+    img {
+      border-radius: 6px;
+    }
+  }
+
+  .addDishButton {
+    position: static;
+    width: 100%;
+    margin-top: 16px;
+    font-size: 1rem;
+    padding: 12px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+  }
+
+  .dishCard {
+    padding: 12px;
+  }
+
+  .dishInfo h3 {
+    font-size: 0.95rem;
+  }
+
+  .description {
+    font-size: 0.8rem;
+  }
+
+  .priceAndRating .price {
+    font-size: 0.9rem;
+  }
+
+  .rateButton {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .dishImage {
+    height: 140px;
+  }
+
+  .addDishButton {
+    font-size: 0.95rem;
+  }
+}
