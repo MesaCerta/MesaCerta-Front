@@ -22,7 +22,7 @@ export default function Home() {
 
   return (
     <div className={styles.topLevel}>
-      <Search onSearchChange={setSearchTerm} search={restaurants} />
+      <Search onSearchChange={setSearchTerm} search={restaurants} searchType="restaurant" />
       <div className={styles.container}>
         <ListContainer
           fetchData={ListRestaurants}

@@ -37,7 +37,7 @@ export default function Dish() {
 
   return (
     <div className={styles.topLevel}>
-      <Search onSearchChange={setSearchTerm} search={dishes} />
+      <Search onSearchChange={setSearchTerm} search={dishes} searchType="dish" />
       <div className={styles.container}>
         <button className={styles.addDishButton} onClick={handleOpenModal}>
           Adicionar Prato
