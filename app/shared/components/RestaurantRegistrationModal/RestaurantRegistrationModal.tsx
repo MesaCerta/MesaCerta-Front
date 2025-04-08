@@ -25,6 +25,26 @@ export const RestaurantRegistrationModal: React.FC<
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user, setUser } = useAuthContext();
 
+  const resetStates = () => {
+    setError("");
+    setSuccess("");
+    setImagePreview(null);
+    setFormData({
+      name: "",
+      address: "",
+      phone: "",
+      cnpj: "",
+      image: "",
+      schedule: [],
+      ownerId: "",
+    });
+  };
+
+  const handleCloseModal = () => {
+    resetStates();
+    onClose();
+  };
+
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
@@ -52,8 +72,32 @@ export const RestaurantRegistrationModal: React.FC<
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!formData.name?.trim()) {
+      setError("O nome do restaurante é obrigatório");
+      return;
+    }
+    if (!formData.address?.trim()) {
+      setError("O endereço é obrigatório");
+      return;
+    }
+    if (!formData.phone?.trim()) {
+      setError("O telefone é obrigatório");
+      return;
+    }
+    if (!formData.cnpj?.trim()) {
+      setError("O CNPJ é obrigatório");
+      return;
+    }
+    if (!formData.schedule || formData.schedule.length === 0) {
+      setError("O horário de funcionamento é obrigatório");
+      return;
+    }
+
     try {
-      const newRestaurant = await createRestaurant({
+      const response = await createRestaurant({
         name: formData.name,
         address: formData.address,
         phone: formData.phone,
@@ -63,10 +107,15 @@ export const RestaurantRegistrationModal: React.FC<
         ownerId: user!.id,
       });
 
+      if ("error" in response) {
+        setError(response.error);
+        return;
+      }
+
       if (user) {
         setUser({
           ...user,
-          restaurants: [...(user.restaurants || []), newRestaurant],
+          restaurants: [...(user.restaurants || []), response],
         });
       }
 
@@ -90,7 +139,7 @@ export const RestaurantRegistrationModal: React.FC<
   if (!isOpen) return null;
 
   return (
-    <div className={styles.modalOverlay} onClick={onClose}>
+    <div className={styles.modalOverlay} onClick={handleCloseModal}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <h2>Registrar Restaurante</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -169,7 +218,7 @@ export const RestaurantRegistrationModal: React.FC<
             <button
               type="button"
               className={styles.cancelButton}
-              onClick={onClose}
+              onClick={handleCloseModal}
             >
               Cancelar
             </button>
