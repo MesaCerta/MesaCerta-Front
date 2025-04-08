@@ -9,7 +9,7 @@ import { RestaurantRegistrationModal } from "../RestaurantRegistrationModal/Rest
 const Navbar = () => {
   const { user, setUser, setToken } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);  // Estado para controle do menu hambúrguer
+  const [menuOpen, setMenuOpen] = useState(false);  
 
   const handleLogout = () => {
     const confirmed = window.confirm("Você realmente deseja sair?");
@@ -36,17 +36,17 @@ const Navbar = () => {
         <Link href="/">
           <Image src={Logo} alt="navLogo" className={styles.logoImg} />
           </Link>
-        {/* Ícone de hamburger, visível apenas em telas pequenas */}
+        
         <div 
           className={styles.hamburger} 
-          onClick={() => setMenuOpen(!menuOpen)}  // Alterna a visibilidade do menu
+          onClick={() => setMenuOpen(!menuOpen)}  
         >
           <span className={styles.bar}></span>
           <span className={styles.bar}></span>
           <span className={styles.bar}></span>
         </div>
         
-        <nav className={`${styles.navbar} ${menuOpen ? styles.active : ""}`}> {/* Classe de ativação do menu */}
+        <nav className={`${styles.navbar} ${menuOpen ? styles.active : ""}`}> 
           <div className={styles.navleft}>
             <Link href="/" className={styles.navLink}>
               <span>Início</span>
