@@ -8,6 +8,7 @@ import useHandleChangeRestaurant from "@/app/shared/hooks/HandleChangeRestaurant
 import { cnpjMask } from "@/app/shared/utils/masks/cnpj";
 import { ModalScheduleInput } from "../ModalScheduleInput/ModalScheduleInput";
 import Image from "next/image";
+import { compressImageFromUrl } from "@/app/shared/utils/imageCompression";
 
 interface RestaurantRegistrationModalProps {
   isOpen: boolean;
@@ -24,30 +25,79 @@ export const RestaurantRegistrationModal: React.FC<
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user, setUser } = useAuthContext();
 
+  const resetStates = () => {
+    setError("");
+    setSuccess("");
+    setImagePreview(null);
+    setFormData({
+      name: "",
+      address: "",
+      phone: "",
+      cnpj: "",
+      image: "",
+      schedule: [],
+      ownerId: "",
+    });
+  };
+
+  const handleCloseModal = () => {
+    resetStates();
+    onClose();
+  };
+
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setImagePreview(base64String);
+      try {
+        const imageUrl = URL.createObjectURL(file);
+        setImagePreview(imageUrl);
+
+        const compressedImage = await compressImageFromUrl(imageUrl);
         setFormData((prev) => ({
           ...prev,
-          image: base64String,
+          image: compressedImage,
         }));
-      };
-      reader.readAsDataURL(file);
+
+        // Limpar a URL criada para evitar vazamento de memória
+        URL.revokeObjectURL(imageUrl);
+      } catch (err) {
+        setError("Erro ao processar a imagem. Por favor, tente novamente.");
+      }
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (!formData.name?.trim()) {
+      setError("O nome do restaurante é obrigatório");
+      return;
+    }
+    if (!formData.address?.trim()) {
+      setError("O endereço é obrigatório");
+      return;
+    }
+    if (!formData.phone?.trim()) {
+      setError("O telefone é obrigatório");
+      return;
+    }
+    if (!formData.cnpj?.trim()) {
+      setError("O CNPJ é obrigatório");
+      return;
+    }
+    if (!formData.schedule || formData.schedule.length === 0) {
+      setError("O horário de funcionamento é obrigatório");
+      return;
+    }
+
     try {
-      const newRestaurant = await createRestaurant({
+      const response = await createRestaurant({
         name: formData.name,
         address: formData.address,
         phone: formData.phone,
@@ -57,11 +107,15 @@ export const RestaurantRegistrationModal: React.FC<
         ownerId: user!.id,
       });
 
-      // Atualiza o usuário no contexto adicionando o novo restaurante
+      if ("error" in response) {
+        setError(response.error);
+        return;
+      }
+
       if (user) {
         setUser({
           ...user,
-          restaurants: [...(user.restaurants || []), newRestaurant],
+          restaurants: [...(user.restaurants || []), response],
         });
       }
 
@@ -85,7 +139,7 @@ export const RestaurantRegistrationModal: React.FC<
   if (!isOpen) return null;
 
   return (
-    <div className={styles.modalOverlay} onClick={onClose}>
+    <div className={styles.modalOverlay} onClick={handleCloseModal}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <h2>Registrar Restaurante</h2>
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -98,8 +152,8 @@ export const RestaurantRegistrationModal: React.FC<
                 <Image
                   src={imagePreview}
                   alt="Preview"
-                  layout="fill"
-                  objectFit="cover"
+                  fill
+                  style={{ objectFit: "cover" }}
                 />
               </div>
             ) : (
@@ -164,7 +218,7 @@ export const RestaurantRegistrationModal: React.FC<
             <button
               type="button"
               className={styles.cancelButton}
-              onClick={onClose}
+              onClick={handleCloseModal}
             >
               Cancelar
             </button>

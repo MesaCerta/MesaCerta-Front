@@ -21,7 +21,7 @@
     gap: 8px;
     font-weight: 500;
     padding-bottom: 1rem;
-  
+
     &:hover {
       color: #1a1a1a;
     }
@@ -191,7 +191,8 @@
   flex-grow: 1;
 }
 
-.buttonEvaluations, .buttonDish {
+.buttonEvaluations,
+.buttonDish {
   width: 100%;
   padding: 1rem;
   background-color: #b94618;
@@ -247,7 +248,6 @@
     }
   }
 }
-
 
 .location {
   height: 100%;
