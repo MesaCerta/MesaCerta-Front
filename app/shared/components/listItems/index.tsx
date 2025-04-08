@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { useRouter } from "next/navigation";
@@ -21,8 +21,17 @@ const ListItems = <T extends IListData>({
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const isMediumScreen = useMediaQuery("(max-width: 1024px)");
   const slidesToShow = isSmallScreen ? 1 : isMediumScreen ? 2 : 3;
+  const [isLoading, setIsLoading] = useState(true);
 
   const ratings = useRatings(items, itemType);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [items]);
 
   const handleCardClick = (
     event: React.MouseEvent<HTMLDivElement>,
@@ -32,6 +41,10 @@ const ListItems = <T extends IListData>({
       router.push(`/${itemType}/${id}`);
     }
   };
+
+  if (isLoading) {
+    return null;
+  }
 
   if (items.length === 0) {
     return (
@@ -82,7 +95,7 @@ const ListItems = <T extends IListData>({
               >
                 <CardList
                   item={item}
-                  rating={ratings[item.id]}
+                  rating={ratings[item.id!]}
                   itemType={itemType}
                   onClick={(e) => handleCardClick(e, item.id)}
                 />
