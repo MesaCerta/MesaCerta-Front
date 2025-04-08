@@ -5,10 +5,12 @@ import Image from "next/image";
 import Logo from "@/public/icons/logo_transparent.png";
 import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
 import { RestaurantRegistrationModal } from "../RestaurantRegistrationModal/RestaurantRegistrationModal";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const { user, setUser, setToken } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const pathname = usePathname();
 
   const handleLogout = () => {
     const confirmed = window.confirm("Você realmente deseja sair?");
@@ -29,6 +31,8 @@ const Navbar = () => {
 
   const restaurantId = user?.restaurants?.[0]?.id;
 
+  const isHomeActive = pathname === "/" || pathname === "/home";
+
   return (
     <div className={styles.container}>
       <div className={styles.toplevel}>
@@ -37,13 +41,28 @@ const Navbar = () => {
         </Link>
         <nav className={styles.navbar}>
           <div className={styles.navleft}>
-            <Link href="/" className={styles.navLink}>
+            <Link
+              href="/"
+              className={`${styles.navLink} ${
+                isHomeActive ? styles.activeLink : ""
+              }`}
+            >
               <span>Início</span>
             </Link>
-            <Link href="/restaurant" className={styles.navLink}>
+            <Link
+              href="/restaurant"
+              className={`${styles.navLink} ${
+                pathname.startsWith("/restaurant") ? styles.activeLink : ""
+              }`}
+            >
               <span>Restaurantes</span>
             </Link>
-            <Link href="/dish" className={styles.navLink}>
+            <Link
+              href="/dish"
+              className={`${styles.navLink} ${
+                pathname.startsWith("/dish") ? styles.activeLink : ""
+              }`}
+            >
               <span>Pratos</span>
             </Link>
           </div>
