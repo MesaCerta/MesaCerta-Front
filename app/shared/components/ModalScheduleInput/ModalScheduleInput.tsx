@@ -1,37 +1,83 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./modalScheduleInput.module.scss";
+import { IScheduleData } from "@/app/shared/@types";
 
-interface Schedule {
-  day: string;
-  openingTime: string;
-  closingTime: string;
-}
+interface ScheduleEntry extends IScheduleData {}
 
 interface ModalScheduleInputProps {
-  onChange: (schedule: Schedule[]) => void;
+  onChange: (schedule: ScheduleEntry[]) => void;
+  initialSchedule?: ScheduleEntry[];
 }
+
+const ALL_DAYS = [
+  "segunda-feira",
+  "terça-feira",
+  "quarta-feira",
+  "quinta-feira",
+  "sexta-feira",
+  "sábado",
+  "domingo",
+];
+
+const initializeSelectedDays = (
+  initialSchedule?: ScheduleEntry[]
+): { [key: string]: boolean } => {
+  const selected: { [key: string]: boolean } = {};
+  const initialDays = new Set(initialSchedule?.map((item) => item.day) || []);
+  ALL_DAYS.forEach((day) => {
+    selected[day] = initialDays.has(day);
+  });
+  return selected;
+};
 
 export const ModalScheduleInput: React.FC<ModalScheduleInputProps> = ({
   onChange,
+  initialSchedule,
 }) => {
-  const [schedule, setSchedule] = useState<Schedule[]>([
-    { day: "segunda-feira", openingTime: "", closingTime: "" },
-    { day: "terça-feira", openingTime: "", closingTime: "" },
-    { day: "quarta-feira", openingTime: "", closingTime: "" },
-    { day: "quinta-feira", openingTime: "", closingTime: "" },
-    { day: "sexta-feira", openingTime: "", closingTime: "" },
-    { day: "sábado", openingTime: "", closingTime: "" },
-    { day: "domingo", openingTime: "", closingTime: "" },
-  ]);
+  const [schedule, setSchedule] = useState<ScheduleEntry[]>(() => {
+    const initialMap = new Map<string, ScheduleEntry>();
+    if (initialSchedule) {
+      initialSchedule.forEach((item) => initialMap.set(item.day, item));
+    }
+    return ALL_DAYS.map(
+      (day) => initialMap.get(day) || { day, openingTime: "", closingTime: "" }
+    );
+  });
 
   const [selectedDays, setSelectedDays] = useState<{ [key: string]: boolean }>(
-    {}
+    () => initializeSelectedDays(initialSchedule)
   );
+
+  useEffect(() => {
+    const initialMap = new Map<string, ScheduleEntry>();
+    if (initialSchedule) {
+      initialSchedule.forEach((item) => initialMap.set(item.day, item));
+    }
+    const newSchedule = ALL_DAYS.map(
+      (day) => initialMap.get(day) || { day, openingTime: "", closingTime: "" }
+    );
+    setSchedule(newSchedule);
+
+    setSelectedDays(initializeSelectedDays(initialSchedule));
+  }, [initialSchedule]);
+
+  const updateSchedule = (
+    newSchedule: ScheduleEntry[],
+    newSelectedDays: { [key: string]: boolean }
+  ) => {
+    const activeSchedule = newSchedule.filter(
+      (s) => newSelectedDays[s.day] === true
+    );
+    onChange(activeSchedule);
+  };
 
   const handleCheckboxChange = (index: number) => {
     const day = schedule[index].day;
-    const newSelectedDays = { ...selectedDays };
-    newSelectedDays[day] = !selectedDays[day];
+    const newSelectedDays = {
+      ...selectedDays,
+      [day]: !selectedDays[day],
+    };
+
     setSelectedDays(newSelectedDays);
 
     const newSchedule = [...schedule];
@@ -39,12 +85,8 @@ export const ModalScheduleInput: React.FC<ModalScheduleInputProps> = ({
       newSchedule[index].openingTime = "";
       newSchedule[index].closingTime = "";
     }
-    setSchedule(newSchedule);
-    onChange(
-      newSchedule.filter(
-        (s) => selectedDays[s.day] || s.openingTime || s.closingTime
-      )
-    );
+
+    updateSchedule(newSchedule, newSelectedDays);
   };
 
   const handleTimeChange = (
@@ -55,31 +97,35 @@ export const ModalScheduleInput: React.FC<ModalScheduleInputProps> = ({
     const newSchedule = [...schedule];
     newSchedule[index][field] = value;
     setSchedule(newSchedule);
-    onChange(
-      newSchedule.filter(
-        (s) => selectedDays[s.day] || s.openingTime || s.closingTime
-      )
-    );
+
+    const day = newSchedule[index].day;
+    const newSelectedDays = { ...selectedDays };
+    if (value && !newSelectedDays[day]) {
+      newSelectedDays[day] = true;
+      setSelectedDays(newSelectedDays);
+    }
+
+    updateSchedule(newSchedule, newSelectedDays);
   };
 
   return (
     <div className={styles.scheduleContainer}>
       <label className={styles.scheduleLabel}>Horários de Funcionamento:</label>
       <div className={styles.scheduleList}>
-        {schedule.map((day, index) => (
-          <div key={day.day} className={styles.scheduleRow}>
+        {schedule.map((dayEntry, index) => (
+          <div key={dayEntry.day} className={styles.scheduleRow}>
             <input
               type="checkbox"
-              checked={selectedDays[day.day]}
+              checked={selectedDays[dayEntry.day] || false}
               onChange={() => handleCheckboxChange(index)}
               className={styles.checkbox}
             />
-            <span className={styles.dayLabel}>{day.day}</span>
-            {selectedDays[day.day] && (
+            <span className={styles.dayLabel}>{dayEntry.day}</span>
+            {selectedDays[dayEntry.day] && (
               <div className={styles.timeInputs}>
                 <input
                   type="time"
-                  value={day.openingTime}
+                  value={dayEntry.openingTime}
                   onChange={(e) =>
                     handleTimeChange(index, "openingTime", e.target.value)
                   }
@@ -88,7 +134,7 @@ export const ModalScheduleInput: React.FC<ModalScheduleInputProps> = ({
                 <span>até</span>
                 <input
                   type="time"
-                  value={day.closingTime}
+                  value={dayEntry.closingTime}
                   onChange={(e) =>
                     handleTimeChange(index, "closingTime", e.target.value)
                   }

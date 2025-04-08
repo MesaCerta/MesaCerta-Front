@@ -1,13 +1,17 @@
 import React from "react";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaEllipsisV } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import styles from "@/app/(general)/restaurant/[id]/restaurantDetails.module.scss";
 
 interface HeaderProps {
   restaurantName: string;
+  onEditClick?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ restaurantName }) => {
+export const Header: React.FC<HeaderProps> = ({
+  restaurantName,
+  onEditClick,
+}) => {
   const router = useRouter();
 
   return (
@@ -17,6 +21,11 @@ export const Header: React.FC<HeaderProps> = ({ restaurantName }) => {
           <FaArrowLeft /> {restaurantName}
         </h1>
       </button>
+      {onEditClick && (
+        <button className={styles.editOptionsButton} onClick={onEditClick}>
+          <FaEllipsisV />
+        </button>
+      )}
     </div>
   );
 };
