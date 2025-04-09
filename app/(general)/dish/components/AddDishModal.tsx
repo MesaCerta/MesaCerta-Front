@@ -5,11 +5,15 @@ import CustomSelect from "@/app/shared/components/inputs/customSelect";
 import Image from "next/image";
 import { useDishForm } from "@/app/shared/hooks/useDishForm";
 import { compressImageFromUrl } from "@/app/shared/utils/imageCompression";
+import { IDishData } from "@/app/shared/@types";
+import { IoClose } from "react-icons/io5";
 
 interface AddDishModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
+  isEditMode?: boolean;
+  dishData?: IDishData | null;
 }
 
 const mealTypeOptions = [
@@ -22,6 +26,8 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
   isOpen,
   onClose,
   onSuccess,
+  isEditMode = false,
+  dishData = null,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const {
@@ -34,24 +40,37 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
     handleSubmit,
     updateImage,
     setError,
-  } = useDishForm({ onSuccess, onClose, isOpen });
+  } = useDishForm({
+    onSuccess: () => {
+      onSuccess();
+      onClose();
+    },
+    onClose,
+    isOpen,
+    isEditMode,
+    initialData: dishData,
+  });
 
   if (!isOpen) return null;
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      let objectUrl = "";
       try {
-        const imageUrl = URL.createObjectURL(file);
-        setImagePreview(imageUrl);
+        objectUrl = URL.createObjectURL(file);
+        setImagePreview(objectUrl);
 
-        const compressedImage = await compressImageFromUrl(imageUrl);
+        const compressedImage = await compressImageFromUrl(objectUrl);
         updateImage(compressedImage);
-
-        // Limpar a URL criada para evitar vazamento de memória
-        URL.revokeObjectURL(imageUrl);
       } catch (err) {
+        console.error("Image processing error:", err);
         setError("Erro ao processar a imagem. Por favor, tente novamente.");
+        setImagePreview(null);
+      } finally {
+        if (objectUrl) {
+          URL.revokeObjectURL(objectUrl);
+        }
       }
     }
   };
@@ -61,12 +80,12 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
   };
 
   return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
-          <h2>Adicionar Novo Prato</h2>
+          <h2>{isEditMode ? "Editar Prato" : "Adicionar Novo Prato"}</h2>
           <button className={styles.closeButton} onClick={onClose}>
-            &times;
+            <IoClose />
           </button>
         </div>
         <form onSubmit={handleSubmit} className={styles.form}>
@@ -112,10 +131,10 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
             id="description"
             name="description"
             label="Descrição"
-            placeholder="Descreva o prato"
+            placeholder="Descreva o prato (máx 500 caracteres)"
             value={formData.description}
             onChange={handleChange}
-            type="text"
+            type="textarea"
             required
           />
 
@@ -124,7 +143,7 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
             name="price"
             label="Preço"
             placeholder="0.00"
-            type="price"
+            type="number"
             value={formData.price}
             onChange={handleChange}
             required
@@ -147,6 +166,7 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
               type="button"
               className={styles.cancelButton}
               onClick={onClose}
+              disabled={isLoading}
             >
               Cancelar
             </button>
@@ -155,7 +175,11 @@ const AddDishModal: React.FC<AddDishModalProps> = ({
               className={styles.submitButton}
               disabled={isLoading}
             >
-              {isLoading ? "Adicionando..." : "Adicionar Prato"}
+              {isLoading
+                ? "Salvando..."
+                : isEditMode
+                ? "Atualizar Prato"
+                : "Adicionar Prato"}
             </button>
           </div>
         </form>
