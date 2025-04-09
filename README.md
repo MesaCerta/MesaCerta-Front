@@ -8,7 +8,7 @@
 
 <h3>Equipe:   
    <a href = "https://github.com/allefbcc">Állef Robson</a> |
-   <a href = "hhttps://github.com/Claudierio">Claudierio Baltazar</a> |
+   <a href = "https://github.com/Claudierio">Claudierio Baltazar</a> |
    <a href = "https://github.com/Dev-Henrique-Almeida">Henrique de Almeida</a>
 </h3>
 
