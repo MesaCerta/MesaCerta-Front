@@ -1,5 +1,6 @@
 <h1>MesaCerta</h1>
-<img src="https://i.imgur.com/pH57SOM.png"/>
+<img src="https://i.imgur.com/pH57SOM.png" style="display: block; margin: 0 auto;" />
+
 
 
 <h3>Equipe:   
@@ -17,7 +18,7 @@
 
 <h1>Sobre o Projeto:</h1>
 
-<h4>Projeto para implementação de um sistema em TypeScript, JavaScript e SCSS para a disciplina de Projeto de Desenvolvimento ministrado pelo Professor Dr. <a href = "https://github.com/rgcrochaa">Rodrigo Rocha</a>, da UFAPE, referente ao período de 2024.2 com intuito de avaliação para a disciplina. O projeto **MesaCerta** é a solução perfeita para quem deseja unir praticidade e experiências gastronômicas de qualidade. Com ele, você pode avaliar restaurantes e pratos, compartilhando suas opiniões para ajudar outros usuários a fazerem as melhores escolhas. Além disso, o sistema permite consultar avaliações confiáveis de outros clientes, garantindo que você sempre encontre o lugar ideal para sua refeição.
+<h4>Projeto para implementação de um sistema em TypeScript, JavaScript e SCSS para a disciplina de Projeto de Desenvolvimento ministrado pelo Professor Dr. <a href = "https://github.com/rgcrochaa">Rodrigo Rocha</a>, da UFAPE, referente ao período de 2024.2 com intuito de avaliação para a disciplina. O projeto MesaCerta é a solução perfeita para quem deseja unir praticidade e experiências gastronômicas de qualidade. Com ele, você pode avaliar restaurantes e pratos, compartilhando suas opiniões para ajudar outros usuários a fazerem as melhores escolhas. Além disso, o sistema permite consultar avaliações confiáveis de outros clientes, garantindo que você sempre encontre o lugar ideal para sua refeição.
 
 Outra funcionalidade essencial é a possibilidade de **agendar horários** de forma rápida e prática, eliminando qualquer complicação na hora de reservar sua mesa. Seja para um **almoço casual, um jantar especial ou uma experiência culinária única**, o **MesaCerta** conecta você aos melhores restaurantes, otimizando seu tempo e garantindo que cada momento seja perfeito. **MesaCerta: Seu lugar, seu sabor, na hora certa!** 🚀</h4>
    
