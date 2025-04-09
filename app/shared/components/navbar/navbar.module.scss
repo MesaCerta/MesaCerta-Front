@@ -59,6 +59,15 @@
     }
   }
 
+  &.activeLink {
+    color: #e6e6e6;
+    font-weight: bold;
+
+    &::after {
+      width: 80%;
+    }
+  }
+
   svg {
     height: 24px;
     width: 24px;

@@ -65,3 +65,17 @@ export const getAverageRatingRestaurant = async (id: string) => {
     throw error;
   }
 };
+
+export const updateRestaurant = async (id: string, restaurantData: any) => {
+  try {
+    const response = await api.patch(`/restaurants/${id}`, restaurantData, configHeaders);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response?.data?.message) {
+        return { error: error.response.data.message };
+      }
+    }
+    return { error: "Erro ao atualizar restaurante. Tente novamente." };
+  }
+};

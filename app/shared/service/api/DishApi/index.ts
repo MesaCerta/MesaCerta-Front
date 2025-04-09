@@ -64,9 +64,35 @@ export const createDish = async (dishData: IDishData) => {
   } catch (error) {
     if (error instanceof AxiosError) {
       if (error.response) {
-        return { error: error.response.data.message || "Erro ao criar prato." };
+        // Return the specific error message from backend if available
+        return {
+          error:
+            error.response.data?.message || "Erro desconhecido ao criar prato.",
+        };
       }
     }
-    throw error;
+    // Fallback for non-Axios errors or unexpected issues
+    return { error: "Erro inesperado ao criar prato." };
+  }
+};
+
+export const updateDish = async (id: string, dishData: Partial<IDishData>) => {
+  try {
+    // Use PATCH for partial updates
+    const response = await api.patch(`/dishes/${id}`, dishData, configHeaders);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      if (error.response) {
+        // Return the specific error message from backend if available
+        return {
+          error:
+            error.response.data?.message ||
+            "Erro desconhecido ao atualizar prato.",
+        };
+      }
+    }
+    // Fallback for non-Axios errors or unexpected issues
+    return { error: "Erro inesperado ao atualizar prato." };
   }
 };
