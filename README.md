@@ -1,7 +1,7 @@
-<h1>MesaCerta</h1>
-<div style="text-align: center;">
-  <img src="https://i.imgur.com/pH57SOM.png" />
-</div>
+<h1 style="text-align: center;">MesaCerta</h1>
+<p align="center">
+  <img src="https://i.imgur.com/pH57SOM.png" alt="Imagem" />
+</p>
 
 
 
