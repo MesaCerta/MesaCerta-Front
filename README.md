@@ -1,5 +1,8 @@
 <h1>MesaCerta</h1>
-<img src="https://i.imgur.com/pH57SOM.png" style="display: block; margin: 0 auto;" />
+<<div style="text-align: center;">
+  <img src="https://i.imgur.com/pH57SOM.png" />
+</div>
+
 
 
 
