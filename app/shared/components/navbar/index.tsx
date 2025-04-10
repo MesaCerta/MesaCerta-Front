@@ -43,7 +43,7 @@ const Navbar = () => {
         <nav className={styles.navbar}>
           <div className={styles.navleft}>
             <Link
-              href="/"
+              href="/home"
               className={`${styles.navLink} ${
                 isHomeActive ? styles.activeLink : ""
               }`}
@@ -83,7 +83,9 @@ const Navbar = () => {
                   <Link
                     href={`/restaurant/${restaurantId}`}
                     className={`${styles.navLink} ${
-                      pathname === `/restaurant/${restaurantId}` ? styles.activeLink : ""
+                      pathname === `/restaurant/${restaurantId}`
+                        ? styles.activeLink
+                        : ""
                     }`}
                   >
                     {displayName}
