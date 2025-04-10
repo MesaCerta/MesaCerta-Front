@@ -18,3 +18,12 @@ export const loginUser = async (userData: ILoginData) => {
     throw error;
   }
 };
+
+export const updateUser = async (userId: string, userData: Partial<IUserData>) => {
+  try {
+    const response = await api.patch(`/users/${userId}`, userData, configHeaders);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
