@@ -1,3 +1,16 @@
 .sectionDishes{
   margin-top: -2rem;
+
+}
+
+@media (max-width: 768px) {
+  .sectionDishes {
+    margin-top: -1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sectionDishes {
+    margin-top: 0;
+  }
 }

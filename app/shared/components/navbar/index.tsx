@@ -6,11 +6,24 @@ import Logo from "@/public/icons/logo_transparent.png";
 import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
 import { RestaurantRegistrationModal } from "../RestaurantRegistrationModal/RestaurantRegistrationModal";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const { user, setUser, setToken } = useAuthContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+  
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleLogout = () => {
     const confirmed = window.confirm("Você realmente deseja sair?");
@@ -23,6 +36,7 @@ const Navbar = () => {
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+  const toggleMobileMenu = () => setIsMobileMenuOpen((prev) => !prev);
 
   const displayName =
     user?.restaurants && user.restaurants.length > 0
@@ -40,6 +54,11 @@ const Navbar = () => {
         <Link href="/">
           <Image src={Logo} alt="navLogo" className={styles.logoImg} />
         </Link>
+
+        <button className={styles.menuButton} onClick={toggleMobileMenu}>
+          ☰
+        </button>
+
         <nav className={styles.navbar}>
           <div className={styles.navleft}>
             <Link
@@ -112,6 +131,56 @@ const Navbar = () => {
           </div>
         </nav>
       </div>
+
+      <div
+        className={`${styles.mobileMenu} ${
+          isMobileMenuOpen ? styles.active : ""
+        }`}
+        onClick={toggleMobileMenu}
+      >
+        <Link href="/home" className={styles.mobileLink}>
+          Início
+        </Link>
+        <Link href="/restaurant" className={styles.mobileLink}>
+          Restaurantes
+        </Link>
+        <Link href="/dish" className={styles.mobileLink}>
+          Pratos
+        </Link>
+        {user ? (
+          <>
+            {!user.restaurants?.length && (
+              <button
+                onClick={handleOpenModal}
+                className={styles.restaurantButton}
+              >
+                Tenho um estabelecimento
+              </button>
+            )}
+            {restaurantId && (
+              <Link
+                href={`/restaurant/${restaurantId}`}
+                className={styles.mobileLink}
+              >
+                {displayName}
+              </Link>
+            )}
+            {!restaurantId && (
+              <Link href={`/user/${user.id}`} className={styles.mobileLink}>
+                {displayName}
+              </Link>
+            )}
+            <button onClick={handleLogout} className={styles.logoutButton}>
+              Sair
+            </button>
+          </>
+        ) : (
+          <Link href="/login" className={styles.loginLink}>
+            Login
+          </Link>
+        )}
+      </div>
+
       <RestaurantRegistrationModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
