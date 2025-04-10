@@ -32,6 +32,7 @@ const Navbar = () => {
   const restaurantId = user?.restaurants?.[0]?.id;
 
   const isHomeActive = pathname === "/" || pathname === "/home";
+  const isUserProfileActive = user?.id && pathname === `/user/${user.id}`;
 
   return (
     <div className={styles.container}>
@@ -81,12 +82,21 @@ const Navbar = () => {
                 {restaurantId ? (
                   <Link
                     href={`/restaurant/${restaurantId}`}
-                    className={styles.navLink}
+                    className={`${styles.navLink} ${
+                      pathname === `/restaurant/${restaurantId}` ? styles.activeLink : ""
+                    }`}
                   >
                     {displayName}
                   </Link>
                 ) : (
-                  <span className={styles.navLink}>{displayName}</span>
+                  <Link
+                    href={`/user/${user.id}`}
+                    className={`${styles.navLink} ${
+                      isUserProfileActive ? styles.activeLink : ""
+                    }`}
+                  >
+                    {displayName}
+                  </Link>
                 )}
                 <button onClick={handleLogout} className={styles.logoutButton}>
                   Sair
