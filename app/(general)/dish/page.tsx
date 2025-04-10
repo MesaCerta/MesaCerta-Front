@@ -7,12 +7,14 @@ import { IDishData } from "@/app/shared/@types";
 import ListContainer from "@/app/shared/components/listItems/listContainer";
 import ListItems from "@/app/shared/components/listItems";
 import AddDishModal from "./components/AddDishModal";
+import { useAuthContext } from "@/app/shared/contexts";
 
 export default function Dish() {
   const [, setSearchTerm] = useState("");
   const [dishes, setDishes] = useState<IDishData[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchDishes = async () => {
@@ -35,13 +37,21 @@ export default function Dish() {
     setRefreshKey((prevKey) => prevKey + 1);
   };
 
+  const isRestaurantOwner = user?.restaurants && user.restaurants.length > 0;
+
   return (
     <div className={styles.topLevel}>
-      <Search onSearchChange={setSearchTerm} search={dishes} searchType="dish" />
+      <Search
+        onSearchChange={setSearchTerm}
+        search={dishes}
+        searchType="dish"
+      />
       <div className={styles.container}>
-        <button className={styles.addDishButton} onClick={handleOpenModal}>
-          Adicionar Prato
-        </button>
+        {isRestaurantOwner && (
+          <button className={styles.addDishButton} onClick={handleOpenModal}>
+            Adicionar Prato
+          </button>
+        )}
         <ListContainer
           refreshTrigger={refreshKey}
           fetchData={ListDishes}

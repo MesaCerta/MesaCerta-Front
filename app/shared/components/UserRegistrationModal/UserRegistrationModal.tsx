@@ -158,8 +158,8 @@ export const UserRegistrationModal: React.FC<UserRegistrationModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className={styles.modalOverlay}>
-      <div className={styles.modalContent}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         <div className={styles.modalHeader}>
           <h2>{isEditMode ? "Editar Perfil" : "Cadastrar Usuário"}</h2>
           <button className={styles.closeButton} onClick={onClose}>
