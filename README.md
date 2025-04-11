@@ -39,6 +39,11 @@ Outra funcionalidade essencial é a possibilidade de **agendar horários** de fo
    <li>Versão: 5.8.3</li>
 </ul>
 
+<h3><a href = "hhttps://sass-lang.com/">SASS</a></h3>
+<ul>
+   <li>Versão: 1.86.3</li>
+</ul>
+
 
 <h1>Status do projeto:</h1>
 <h4>Em Andamento</h4>
