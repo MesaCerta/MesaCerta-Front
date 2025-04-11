@@ -309,3 +309,70 @@
   line-height: 1.6;
   text-align: left;
 }
+
+@media (max-width: 1024px) {
+  .imageGallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .mainImage,
+  .rightImage,
+  .secondaryImagesContainer,
+  .secondaryImage {
+    width: 100%;
+    height: auto;
+  }
+
+  .secondaryImagesContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .secondaryImage {
+      flex: 1 1 48%;
+      height: 150px;
+    }
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .infoSection,
+  .detailsSection {
+    width: 100%;
+    height: auto;
+  }
+
+  .reserveButton {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .header h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .backButton {
+    font-size: 1rem;
+    justify-content: center;
+  }
+
+  .dishDescriptionMain {
+    font-size: 0.95rem;
+    text-align: justify;
+  }
+
+  .dishesGrid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+
+    img {
+      height: 100px;
+    }
+  }
+}
