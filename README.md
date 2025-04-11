@@ -29,7 +29,7 @@ Outra funcionalidade essencial é a possibilidade de **agendar horários** de fo
 <h3><a href= "https://www.youtube.com/watch?v=lgomVGFIFY0" target="_blank">Pitch</a> </h3>
 <h1>Tecnologias Usadas:</h1>
 
-<h3><a href = "hhttps://nextjs.org/">Next.js</a></h3>
+<h3><a href = "https://nextjs.org/">Next.js</a></h3>
 <ul>
    <li>Versão: 14.2.21</li>
 </ul>
@@ -39,9 +39,9 @@ Outra funcionalidade essencial é a possibilidade de **agendar horários** de fo
    <li>Versão: 5.8.3</li>
 </ul>
 
-<h3><a href = "hhttps://sass-lang.com/">SASS</a></h3>
+<h3><a href = "https://sass-lang.com/">SASS</a></h3>
 <ul>
-   <li>Versão: 1.86.3</li>
+   <li>Versão: 1.77.8</li>
 </ul>
 
 
