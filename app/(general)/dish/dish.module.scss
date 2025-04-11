@@ -30,3 +30,21 @@
     background-color: darken(#c45c3c, 10%);
   }
 }
+
+@media (max-width: 768px) {
+  .addDishButton {
+    right: 60px;
+    top: 50px;
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .addDishButton {
+    right: 20px;
+    top: 40px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}

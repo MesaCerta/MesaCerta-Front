@@ -278,6 +278,7 @@
     margin: 0 auto;
     justify-content: center;
     align-items: center;
+    margin-bottom: 1rem;
 
     img {
       width: 100%;
@@ -335,3 +336,104 @@
     background-color: darken(#b94618, 5%);
   }
 }
+
+@media (max-width: 1024px) {
+  .imageGallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mainImage,
+  .rightImage,
+  .secondaryImagesContainer {
+    width: 100%;
+    height: auto;
+  }
+
+  .secondaryImagesContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .secondaryImage {
+      width: 45%;
+      height: 140px;
+    }
+  }
+
+  .rightImage {
+    margin-top: 1rem;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .infoSection,
+  .detailsSection {
+    width: 100%;
+    height: auto;
+  }
+
+  .dishesGrid {
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+
+    .backButton {
+      font-size: 1.2rem;
+
+      h1 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  .imageGallery {
+    gap: 0.5rem;
+  }
+
+  .secondaryImagesContainer .secondaryImage {
+    width: 100%;
+    height: 120px;
+  }
+
+  .mainImage img,
+  .rightImage img,
+  .secondaryImagesContainer .secondaryImage img {
+    border-radius: 4px;
+  }
+
+  .details {
+    .priceRange,
+    .cuisine,
+    .specialDishes {
+      h3 {
+        font-size: 0.95rem;
+      }
+
+      p {
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .reserveButton,
+  .buttonEvaluations,
+  .buttonDish {
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
+

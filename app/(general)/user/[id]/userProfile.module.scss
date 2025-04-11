@@ -104,3 +104,63 @@
 .error {
   color: #ff6b6b;
 } 
+
+@media (max-width: 768px) {
+  .coverPhoto {
+    height: 220px;
+    margin-bottom: 80px;
+  }
+
+  .profilePicture {
+    width: 120px;
+    height: 120px;
+    bottom: -60px;
+    left: 30px;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .editButton {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+  }
+
+  .profileInfo {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .coverPhoto {
+    height: 180px;
+    margin-bottom: 60px;
+  }
+
+  .profilePicture {
+    width: 100px;
+    height: 100px;
+    bottom: -50px;
+    left: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .header h1 {
+    font-size: 1.4rem;
+  }
+
+  .editButton {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .profileInfo {
+    padding: 12px;
+  }
+}
