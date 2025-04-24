@@ -14,6 +14,7 @@ const useHandleChangeUser = (initialData: Partial<IUserData> = {}) => {
     phone: "",
     birthdate: "",
     cpf: "",
+    restaurants: initialData.restaurants ?? [],
     ...initialData,
   });
 
