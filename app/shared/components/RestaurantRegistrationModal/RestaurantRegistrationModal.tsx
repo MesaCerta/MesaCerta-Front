@@ -5,7 +5,7 @@ import { createRestaurant, updateRestaurant } from "@/app/shared/service";
 import { phoneMask } from "@/app/shared/utils/Masks/masks";
 import CustomInput from "@/app/shared/components/inputs/customInput/index";
 import useHandleChangeRestaurant from "@/app/shared/hooks/HandleChangeRestaurant/useHandleChangeRestaurant";
-import { cnpjMask } from "@/app/shared/utils/masks/cnpj";
+import { cnpjMask } from "@/app/shared/utils/Masks/cnpj";
 import { ModalScheduleInput } from "../ModalScheduleInput/ModalScheduleInput";
 import Image from "next/image";
 import { compressImageFromUrl } from "@/app/shared/utils/imageCompression";
