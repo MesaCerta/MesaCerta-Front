@@ -11,16 +11,18 @@ export default function CustomSelect({
   label,
   options,
 }: ICustomSelectProps) {
+  const labelClass = `${styles.label} ${id === "sex" ? styles.whiteText : ""}`;
+
   return (
     <div className={styles.field}>
-      <label htmlFor={id} className={styles.label}>
+      <label htmlFor={id} className={labelClass}>
         {label}:
       </label>
       <select
         id={id}
         name={name}
         required={required}
-        className={`${styles.input} ${id === "sex" ? styles.whiteText : ""}`}
+        className={styles.input}
         value={value}
         onChange={onChange}
       >
