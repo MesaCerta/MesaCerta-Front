@@ -9,6 +9,14 @@
    <a href = "https://github.com/Dev-Henrique-Almeida">Henrique de Almeida</a>
 </h3>
 
+<h1>URL do Projeto</h1>
+<h4>
+   <h4>Acessos para testes:</h4>
+   <h4>Deploy do sistema:  <a href = "https://mesacerta-front.onrender.com">Mesa Certa</a></h4>
+   <h4>Login para Cliente: cliente@cliente.com    | Senha: cliente</h4>
+   <h4>Login para Vendedor: vendedor@vendedor.com | Senha: vendedor</h4>
+</h4>
+
 <h1>Sobre o Projeto:</h1>
 
 <h4>Projeto para implementação de um sistema em TypeScript, JavaScript e SCSS para a disciplina de Projeto de Desenvolvimento ministrado pelo Professor Dr. <a href = "https://github.com/rgcrochaa">Rodrigo Rocha</a>, da UFAPE, referente ao período de 2024.2 com intuito de avaliação para a disciplina. O projeto MesaCerta é a solução perfeita para quem deseja unir praticidade e experiências gastronômicas de qualidade. Com ele, você pode avaliar restaurantes e pratos, compartilhando suas opiniões para ajudar outros usuários a fazerem as melhores escolhas. Além disso, o sistema permite consultar avaliações confiáveis de outros clientes, garantindo que você sempre encontre o lugar ideal para sua refeição.
