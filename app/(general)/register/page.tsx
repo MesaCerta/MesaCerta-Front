@@ -43,6 +43,7 @@ export default function Register() {
 
       if (!isRestaurantOwner) {
         alert("Registro realizado com sucesso!");
+        router.push("/home");
       } else if (isRestaurantOwner) {
         router.push("/registerRestaurant");
       } else {
