@@ -74,6 +74,6 @@ bun dev
 Caso use alguma api externa, crie um arquivo `.env`, com os seguintes dados:
 
 ```bash
-API_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:3000
 
 ```

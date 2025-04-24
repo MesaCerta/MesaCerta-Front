@@ -20,7 +20,7 @@ export default function CustomSelect({
         id={id}
         name={name}
         required={required}
-        className={styles.input}
+        className={`${styles.input} ${id === "sex" ? styles.whiteText : ""}`}
         value={value}
         onChange={onChange}
       >
