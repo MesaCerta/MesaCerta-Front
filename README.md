@@ -14,7 +14,7 @@
 <h4>Projeto para implementação de um sistema em TypeScript, JavaScript e SCSS para a disciplina de Projeto de Desenvolvimento ministrado pelo Professor Dr. <a href = "https://github.com/rgcrochaa">Rodrigo Rocha</a>, da UFAPE, referente ao período de 2024.2 com intuito de avaliação para a disciplina. O projeto MesaCerta é a solução perfeita para quem deseja unir praticidade e experiências gastronômicas de qualidade. Com ele, você pode avaliar restaurantes e pratos, compartilhando suas opiniões para ajudar outros usuários a fazerem as melhores escolhas. Além disso, o sistema permite consultar avaliações confiáveis de outros clientes, garantindo que você sempre encontre o lugar ideal para sua refeição.
 
 Outra funcionalidade essencial é a possibilidade de **agendar horários** de forma rápida e prática, eliminando qualquer complicação na hora de reservar sua mesa. Seja para um **almoço casual, um jantar especial ou uma experiência culinária única**, o **MesaCerta** conecta você aos melhores restaurantes, otimizando seu tempo e garantindo que cada momento seja perfeito. **MesaCerta: Seu lugar, seu sabor, na hora certa!** 🚀</h4>
-   
+
 <h1>Objetivo:</h1>
 
    <h4> O projeto Mesa Certa tem como objetivo criar uma plataforma digital que conecte clientes e restaurantes em Garanhuns-PE, permitindo que os usuários avaliem pratos e estabelecimentos, consultem opiniões de outros clientes e realizem reservas de mesas de forma prática. Além disso, oferece aos donos de restaurantes um painel administrativo para gerenciar horários, adicionar pratos e acompanhar reservas em tempo real, promovendo a gastronomia local com inovação e eficiência.
@@ -44,7 +44,6 @@ Outra funcionalidade essencial é a possibilidade de **agendar horários** de fo
    <li>Versão: 1.77.8</li>
 </ul>
 
-
 <h1>Status do projeto:</h1>
 <h4>Em Andamento</h4>
 
@@ -68,4 +67,13 @@ yarn dev
 pnpm dev
 # or
 bun dev
+```
+
+## 🔐 Variáveis de Ambiente `(.env)`
+
+Caso use alguma api externa, crie um arquivo `.env`, com os seguintes dados:
+
+```bash
+API_URL=http://localhost:3000
+
 ```
