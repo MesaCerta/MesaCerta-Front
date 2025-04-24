@@ -6,12 +6,12 @@ import { useRouter } from "next/navigation";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
 import { useAuthContext } from "@/app/shared/contexts";
 import { createUser, loginUser } from "@/app/shared/service";
-import { phoneMask } from "@/app/shared/utils/Masks/masks";
+import { phoneMask } from "@/app/shared/utils/masks/masks";
 import CustomInput from "@/app/shared/components/inputs/customInput/index";
 import CustomSelect from "@/app/shared/components/inputs/customSelect";
 import Image from "next/image";
 import RestaurantOwnerCheckbox from "@/app/shared/components/RestaurantOwnerCheckbox";
-import { cpfMask } from "@/app/shared/utils/Masks/cpf";
+import { cpfMask } from "@/app/shared/utils/masks/cpf";
 
 export default function Register() {
   const router = useRouter();

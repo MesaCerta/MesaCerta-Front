@@ -1,2 +1,2 @@
 export * from "./LocalStorageUtils/localStorageUtils";
-export * from "./Masks/masks"
+export * from "./masks/masks";

@@ -4,10 +4,10 @@ import styles from "./registerRestaurant.module.scss";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "@/app/shared/contexts";
 import { createRestaurant } from "@/app/shared/service";
-import { phoneMask } from "@/app/shared/utils/Masks/masks";
+import { phoneMask } from "@/app/shared/utils/masks/masks";
 import CustomInput from "@/app/shared/components/inputs/customInput/index";
 import useHandleChangeRestaurant from "@/app/shared/hooks/HandleChangeRestaurant/useHandleChangeRestaurant";
-import { cnpjMask } from "@/app/shared/utils/Masks/cnpj";
+import { cnpjMask } from "@/app/shared/utils/masks/cnpj";
 import ScheduleInput from "@/app/shared/components/inputs/scheduleInput";
 import Image from "next/image";
 
